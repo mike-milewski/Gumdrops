@@ -27,7 +27,7 @@ public class ScaleGumDropTrigger : MonoBehaviour
         if(Screen.width != ResolutionX && Screen.height != ResolutionY)
         {
             SetPosition();
-
+          
             ResolutionX = Screen.width;
             ResolutionY = Screen.height;
         }

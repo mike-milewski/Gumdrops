@@ -80,9 +80,6 @@ public class WaveSpawner : MonoBehaviour
     private Boundary boundary;
 
     [SerializeField]
-    private Transform PoolTransform;
-
-    [SerializeField]
     private float DefaultSpawnTimer, SpawnTimer;
 
     private void Awake()
@@ -125,8 +122,7 @@ public class WaveSpawner : MonoBehaviour
         for (int i = 0; i < Count; i++)
         {
             var PO = Instantiate(poolcontroller.GetObjectToPool);
-            PO.transform.SetParent(PoolTransform);
-            PO.transform.position = new Vector2(PoolTransform.position.x, PoolTransform.position.y);
+            PO.transform.position = new Vector2(transform.position.x, transform.position.y);
             poolcontroller.GetPooledObject.Enqueue(PO);
 
             PO.gameObject.SetActive(false);

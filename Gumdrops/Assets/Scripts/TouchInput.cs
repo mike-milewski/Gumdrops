@@ -2,28 +2,35 @@ using UnityEngine;
 
 public class TouchInput : MonoBehaviour
 {
-    private RaycastHit hit;
+    [SerializeField]
+    private Camera cam;
+
+    private Vector2 touchPosition;
+
+    private void Start()
+    {
+        cam.GetComponent<Camera>();
+    }
 
     void Update()
     {
-        for (int i = 0; i < Input.touchCount; ++i)
+        if(Input.touchCount > 0)
         {
-            if (Input.GetTouch(i).phase == TouchPhase.Began)
-            {
-                // Construct a ray from the current touch coordinates
-                Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(i).position);
+            Touch touch = Input.GetTouch(0);
 
-                // Create a particle if hit
-                if (Physics.Raycast(ray))
+            touchPosition = cam.ScreenToWorldPoint(touch.position);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                Collider2D touchedCollider = Physics2D.OverlapPoint(touchPosition);
+                if(touchedCollider == null)
                 {
-                    Debug.Log(Input.GetTouch(i).position);
+                    return;
                 }
-                if(Physics.Raycast(ray, out hit))
+                else
                 {
-                    if(hit.collider.GetComponent<Gumdrop>())
-                    {
-                        Debug.Log("Gumdrop");
-                    }
+                    Debug.Log("Test");
+                    //touchedCollider.gameObject.SetActive(false);
                 }
             }
         }
