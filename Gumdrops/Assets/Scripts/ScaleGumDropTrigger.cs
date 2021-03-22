@@ -6,9 +6,12 @@ public class ScaleGumDropTrigger : MonoBehaviour
     private Camera cam;
 
     [SerializeField]
+    private Canvas canvas;
+
+    [SerializeField]
     private BoxCollider2D boxCollider2D;
 
-    private int ResolutionX, ResolutionY;
+    private float ResolutionX, ResolutionY;
 
     private void Awake()
     {
@@ -17,24 +20,26 @@ public class ScaleGumDropTrigger : MonoBehaviour
         ResolutionX = Screen.width;
         ResolutionY = Screen.height;
 
+        boxCollider2D.size = new Vector2(Screen.width * 2, boxCollider2D.size.y);
+
         SetPosition();
     }
 
     private void Update()
     {
-        boxCollider2D.size = new Vector2(Screen.width, boxCollider2D.size.y);
-
         if(Screen.width != ResolutionX && Screen.height != ResolutionY)
         {
-            SetPosition();
-          
+            boxCollider2D.size = new Vector2(Screen.width * 2, boxCollider2D.size.y);
+
             ResolutionX = Screen.width;
             ResolutionY = Screen.height;
+
+            SetPosition();
         }
     }
 
     private void SetPosition()
     {
-        transform.position = new Vector2(Screen.width / 2, transform.position.y);
+        transform.position = new Vector2(0, transform.position.y);
     }
 }

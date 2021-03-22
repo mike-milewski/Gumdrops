@@ -15,9 +15,45 @@ public class Boundary
 
     public Vector2 SetBoundaries()
     {
-        bounds = cam.ViewportToScreenPoint(new Vector3(Random.Range(MinX, MaxX), 1, 10));
+        bounds = cam.ViewportToWorldPoint(new Vector3(Random.Range(MinX, MaxX), 1, 10));
 
         return bounds;
+    }
+
+    public Camera GetCamera
+    {
+        get
+        {
+            return cam;
+        }
+        set
+        {
+            cam = value;
+        }
+    }
+
+    public float GetMinX
+    {
+        get
+        {
+            return MinX;
+        }
+        set
+        {
+            MinX = value;
+        }
+    }
+
+    public float GetMaxX
+    {
+        get
+        {
+            return MaxX;
+        }
+        set
+        {
+            MaxX = value;
+        }
     }
 }
 
@@ -80,6 +116,9 @@ public class WaveSpawner : MonoBehaviour
     private Boundary boundary;
 
     [SerializeField]
+    private Transform GumDropParent;
+
+    [SerializeField]
     private float DefaultSpawnTimer, SpawnTimer;
 
     private void Awake()
@@ -122,6 +161,7 @@ public class WaveSpawner : MonoBehaviour
         for (int i = 0; i < Count; i++)
         {
             var PO = Instantiate(poolcontroller.GetObjectToPool);
+            PO.transform.SetParent(GumDropParent.transform, false);
             PO.transform.position = new Vector2(transform.position.x, transform.position.y);
             poolcontroller.GetPooledObject.Enqueue(PO);
 

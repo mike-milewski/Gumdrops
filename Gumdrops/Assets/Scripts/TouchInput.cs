@@ -1,9 +1,13 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TouchInput : MonoBehaviour
 {
     [SerializeField]
     private Camera cam;
+
+    [SerializeField]
+    private LayerMask layermask;
 
     private Vector2 touchPosition;
 
@@ -22,14 +26,15 @@ public class TouchInput : MonoBehaviour
 
             if (touch.phase == TouchPhase.Began)
             {
-                Collider2D touchedCollider = Physics2D.OverlapPoint(touchPosition);
-                if(touchedCollider == null)
+                RaycastHit2D hit = Physics2D.Raycast(touchPosition, touch.position, layermask);
+
+                if(hit && hit.collider.GetComponent<Gumdrop>() && !EventSystem.current.IsPointerOverGameObject(0))
                 {
-                    return;
+                    Debug.Log(hit.collider.name);
                 }
                 else
                 {
-                    Debug.Log("Test");
+                    return;
                     //touchedCollider.gameObject.SetActive(false);
                 }
             }
