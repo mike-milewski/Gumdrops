@@ -102,8 +102,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51b96458b83f284aa29a548b7883832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 250
+  MoveSpeed: 350
   RotationSpeed: 60
+  spriteRenderer: {fileID: 2682672891622776846}
+  color:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 0.37446833, b: 1, a: 1}
+  - {r: 0, g: 1, b: 0.10012627, a: 1}
+  - {r: 1, g: 0.9614235, b: 0, a: 1}
 --- !u!50 &2682672891622776847
 Rigidbody2D:
   serializedVersion: 4

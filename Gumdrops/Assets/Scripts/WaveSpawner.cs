@@ -119,7 +119,9 @@ public class WaveSpawner : MonoBehaviour
     private Transform GumDropParent;
 
     [SerializeField]
-    private float DefaultSpawnTimer, SpawnTimer;
+    private float DefaultSpawnTimer;
+
+    private float SpawnTimer;
 
     private void Awake()
     {
