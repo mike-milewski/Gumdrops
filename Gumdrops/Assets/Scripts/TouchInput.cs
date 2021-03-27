@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class TouchInput : MonoBehaviour
 {
@@ -11,9 +12,13 @@ public class TouchInput : MonoBehaviour
 
     private Vector2 touchPosition;
 
+    private Scene scene;
+
     private void Start()
     {
         cam.GetComponent<Camera>();
+
+        scene = SceneManager.GetActiveScene();
     }
 
     void Update()
@@ -28,16 +33,24 @@ public class TouchInput : MonoBehaviour
             {
                 RaycastHit2D hit = Physics2D.Raycast(touchPosition, touch.position, layermask);
 
-                if(hit && hit.collider.GetComponent<Gumdrop>() && !EventSystem.current.IsPointerOverGameObject(0))
+                if(hit && hit.collider.GetComponent<Gumdrop>() && !EventSystem.current.IsPointerOverGameObject(0) && scene.buildIndex != 0)
                 {
-                    Debug.Log(hit.collider.name);
+                    hit.collider.GetComponent<Gumdrop>().CheckColor();
+
+                    hit.collider.GetComponent<Gumdrop>().ReturnGumDropBackToQueue();
                 }
                 else
                 {
-                    return;
-                    //touchedCollider.gameObject.SetActive(false);
+                    SpawnTouchParticle();
                 }
             }
         }
+    }
+
+    private void SpawnTouchParticle()
+    {
+        var GO = ObjectPooler.Instance.GetTouchParticle();
+        GO.SetActive(true);
+        GO.transform.position = touchPosition;
     }
 }

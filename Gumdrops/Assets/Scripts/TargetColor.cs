@@ -1,45 +1,63 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum StartingColor { Red, Blue, Green, Yellow }
+public enum ColorList { Red, Blue, Green, Yellow }
 
 public class TargetColor : MonoBehaviour
 {
     [SerializeField]
-    private StartingColor startingColor;
-
-    [SerializeField]
-    private Color color;
+    private ColorList[] color;
 
     [SerializeField]
     private Image image;
+
+    [SerializeField]
+    private float DefaultTimeToChangeColor;
+
+    private float TimeToChangeColor;
+
+    private int ColorIndex;
 
     private void Start()
     {
         image = GetComponent<Image>();
     }
 
-    private void Awake()
+    private void Update()
     {
-        ChooseStartingColor();
+        TimeToChangeColor -= Time.deltaTime;
+        if(TimeToChangeColor <= 0)
+        {
+            ChooseColor();
+            TimeToChangeColor = DefaultTimeToChangeColor;
+        }
     }
 
-    private void ChooseStartingColor()
+    private void ChooseColor()
     {
-        switch(startingColor)
+        ColorIndex = Random.Range(0, color.Length);
+
+        switch(color[ColorIndex])
         {
-            case (StartingColor.Red):
+            case (ColorList.Red):
                 image.color = Color.red;
                 break;
-            case (StartingColor.Blue):
+            case (ColorList.Blue):
                 image.color = Color.blue;
                 break;
-            case (StartingColor.Green):
+            case (ColorList.Green):
                 image.color = Color.green;
                 break;
-            case (StartingColor.Yellow):
+            case (ColorList.Yellow):
                 image.color = Color.yellow;
                 break;
         }
+    }
+
+    public void SetStartingColorTimeAndColor()
+    {
+        TimeToChangeColor = DefaultTimeToChangeColor;
+
+        ChooseColor();
     }
 }

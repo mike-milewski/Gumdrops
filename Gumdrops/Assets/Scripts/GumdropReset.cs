@@ -6,7 +6,7 @@ public class GumdropReset : MonoBehaviour
     {
         if (collision.GetComponent<Gumdrop>())
         {
-            WaveSpawner.Instance.ReturnGumDropToPool(collision.gameObject);
+            ObjectPooler.Instance.ReturnGumDropToPool(collision.gameObject);
         }
     }
 }
