@@ -8,5 +8,9 @@ public class GumdropReset : MonoBehaviour
         {
             ObjectPooler.Instance.ReturnGumDropToPool(collision.gameObject);
         }
+        if (collision.GetComponent<PowerUps>())
+        {
+            ObjectPooler.Instance.ReturnPowerUpToPool(collision.gameObject);
+        }
     }
 }

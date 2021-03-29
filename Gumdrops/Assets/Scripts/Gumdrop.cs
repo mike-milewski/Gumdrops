@@ -17,7 +17,11 @@ public class Gumdrop : MonoBehaviour
     [SerializeField]
     private int ScoreValue;
 
+    private int DefaultScore;
+
     private int ColorIndex;
+
+    private float DefaultMoveSpeed;
 
     private ObjectPooler objectPooler;
 
@@ -61,6 +65,54 @@ public class Gumdrop : MonoBehaviour
         }
     }
 
+    public int GetScoreValue
+    {
+        get
+        {
+            return ScoreValue;
+        }
+        set
+        {
+            ScoreValue = value;
+        }
+    }
+
+    public int GetDefaultScore
+    {
+        get
+        {
+            return DefaultScore;
+        }
+        set
+        {
+            DefaultScore = value;
+        }
+    }
+
+    public float GetMoveSpeed
+    {
+        get
+        {
+            return MoveSpeed;
+        }
+        set
+        {
+            MoveSpeed = value;
+        }
+    }
+
+    public float GetDefaultMoveSpeed
+    {
+        get
+        {
+            return DefaultMoveSpeed;
+        }
+        set
+        {
+            DefaultMoveSpeed = value;
+        }
+    }
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -69,6 +121,9 @@ public class Gumdrop : MonoBehaviour
     private void OnEnable()
     {
         ChooseColor();
+
+        DefaultScore = ScoreValue;
+        DefaultMoveSpeed = MoveSpeed;
     }
 
     private void Update()

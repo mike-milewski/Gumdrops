@@ -53,6 +53,8 @@ MonoBehaviour:
     PoolAmount: 30
   - ObjectToPool: {fileID: 1176168246839325689, guid: 1e4daa07e738f6c47b92274ff61a7e6c, type: 3}
     PoolAmount: 15
+  - ObjectToPool: {fileID: 3578594078837910392, guid: 71bc94d7b3930404e8a17db1d64092c3, type: 3}
+    PoolAmount: 1
   boundary:
     cam: {fileID: 0}
     MinX: 0.15

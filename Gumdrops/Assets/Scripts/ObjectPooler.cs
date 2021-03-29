@@ -116,6 +116,8 @@ public class ObjectPooler : MonoBehaviour
     [SerializeField]
     private Boundary boundary;
 
+    private PowerUpManager powerupManager = null;
+
     [SerializeField]
     private Transform GumDropParent, TouchParticleParent;
 
@@ -123,6 +125,18 @@ public class ObjectPooler : MonoBehaviour
     private float DefaultSpawnTimer;
 
     private float SpawnTimer;
+
+    public Boundary GetBoundary
+    {
+        get
+        {
+            return boundary;
+        }
+        set
+        {
+            boundary = value;
+        }
+    }
 
     private void Awake()
     {
@@ -141,6 +155,12 @@ public class ObjectPooler : MonoBehaviour
 
         AddGumDrops(poolcontroller[0].GetPoolAmount);
         AddTouchParticle(poolcontroller[1].GetPoolAmount);
+        AddPowerUp(poolcontroller[2].GetPoolAmount);
+    }
+
+    private void OnEnable()
+    {
+        CheckPowerUpManager();
     }
 
     private void Update()
@@ -148,12 +168,37 @@ public class ObjectPooler : MonoBehaviour
         SpawnTimer -= Time.deltaTime;
         if (SpawnTimer <= 0)
         {
-            SpawnGumDrop();
+            SpawnObjects();
+
             SpawnTimer = DefaultSpawnTimer;
         }
     }
 
-    private void SpawnGumDrop()
+    private bool SpawnObjects()
+    {
+        if(powerupManager != null)
+        {
+            powerupManager.PowerUpSpawn();
+        }
+        else
+        {
+            SpawnGumDrop();
+        }
+
+        return powerupManager;
+    }
+
+    private void CheckPowerUpManager()
+    {
+        var pum = Object.FindObjectOfType<PowerUpManager>();
+
+        if(pum != null)
+        {
+            powerupManager = pum;
+        }
+    }
+
+    public void SpawnGumDrop()
     {
         var GO = GetGumDrop();
         GO.SetActive(true);
@@ -197,6 +242,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddPowerUp(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[2].GetObjectToPool);
+            PO.transform.SetParent(GumDropParent.transform, false);
+            poolcontroller[2].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetGumDrop()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -205,6 +262,11 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetTouchParticle()
     {
         return poolcontroller[1].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetPowerUp()
+    {
+        return poolcontroller[2].GetPooledObject.Dequeue();
     }
 
     public void ReturnGumDropToPool(GameObject pooledObject)
@@ -216,6 +278,12 @@ public class ObjectPooler : MonoBehaviour
     public void ReturnTouchParticleToPool(GameObject pooledObject)
     {
         poolcontroller[1].GetPooledObject.Enqueue(pooledObject);
+        pooledObject.SetActive(false);
+    }
+
+    public void ReturnPowerUpToPool(GameObject pooledObject)
+    {
+        poolcontroller[2].GetPooledObject.Enqueue(pooledObject);
         pooledObject.SetActive(false);
     }
 }

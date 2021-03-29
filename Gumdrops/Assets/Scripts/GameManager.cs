@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     private Button menuButton;
 
     [SerializeField]
-    private int DefaultTargetScore, TargetScore, ScoreIncrement;
+    private int DefaultTargetScore, TargetScore, ScoreIncrement, GumDropMoveSpeedIncrement;
 
     [SerializeField]
     private float StartTimer;
@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviour
         TargetScore += ScoreIncrement;
 
         TargetScoreText.text = TargetScore.ToString();
+
+        IncreaseGumDropAndPowerUpSpeed();
     }
 
     public void PlayOverlayAnimator()
@@ -89,6 +91,46 @@ public class GameManager : MonoBehaviour
         foreach(Gumdrop gd in gumDrops)
         {
             ObjectPooler.Instance.ReturnGumDropToPool(gd.gameObject);
+        }
+    }
+
+    public void ResetPowerUp()
+    {
+        var powerUpMovement = FindObjectsOfType<PowerUpMovement>(false);
+
+        foreach (PowerUpMovement pum in powerUpMovement)
+        {
+            ObjectPooler.Instance.ReturnPowerUpToPool(pum.gameObject);
+        }
+    }
+
+    private void IncreaseGumDropAndPowerUpSpeed()
+    {
+        var gumDrops = FindObjectsOfType<Gumdrop>(false);
+        var powerUpMovement = FindObjectsOfType<PowerUpMovement>(false);
+
+        foreach (Gumdrop gd in gumDrops)
+        {
+            gd.GetMoveSpeed += GumDropMoveSpeedIncrement;
+        }
+        foreach (PowerUpMovement pum in powerUpMovement)
+        {
+            pum.GetMoveSpeed += GumDropMoveSpeedIncrement;
+        }
+    }
+
+    public void RestGumDropAndPowerUpSpeed()
+    {
+        var gumDrops = FindObjectsOfType<Gumdrop>(false);
+        var powerUpMovement = FindObjectsOfType<PowerUpMovement>(false);
+
+        foreach (Gumdrop gd in gumDrops)
+        {
+            gd.GetMoveSpeed = gd.GetDefaultMoveSpeed;
+        }
+        foreach (PowerUpMovement pum in powerUpMovement)
+        {
+            pum.GetMoveSpeed = pum.GetDefaultMoveSpeed;
         }
     }
 

@@ -149,9 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51b96458b83f284aa29a548b7883832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 350
+  MoveSpeed: 200
   RotationSpeed: 60
   spriteRenderer: {fileID: 2682672891622776846}
-  color: {r: 0, g: 0, b: 0, a: 0}
   colors: 00000000010000000200000003000000
   ScoreValue: 10
