@@ -18,6 +18,32 @@ public class TargetColor : MonoBehaviour
 
     private int ColorIndex;
 
+    private bool StaticColor;
+
+    public Image GetImage
+    {
+        get
+        {
+            return image;
+        }
+        set
+        {
+            image = value;
+        }
+    }
+
+    public bool GetStaticColor
+    {
+        get
+        {
+            return StaticColor;
+        }
+        set
+        {
+            StaticColor = value;
+        }
+    } 
+
     private void Start()
     {
         image = GetComponent<Image>();
@@ -25,11 +51,14 @@ public class TargetColor : MonoBehaviour
 
     private void Update()
     {
-        TimeToChangeColor -= Time.deltaTime;
-        if(TimeToChangeColor <= 0)
+        if(!StaticColor)
         {
-            ChooseColor();
-            TimeToChangeColor = DefaultTimeToChangeColor;
+            TimeToChangeColor -= Time.deltaTime;
+            if (TimeToChangeColor <= 0)
+            {
+                ChooseColor();
+                TimeToChangeColor = DefaultTimeToChangeColor;
+            }
         }
     }
 
@@ -54,7 +83,12 @@ public class TargetColor : MonoBehaviour
         }
     }
 
-    public void SetStartingColorTimeAndColor()
+    public void SetTimer()
+    {
+        TimeToChangeColor = DefaultTimeToChangeColor;
+    }
+
+    public void SetStartingTimeAndColor()
     {
         TimeToChangeColor = DefaultTimeToChangeColor;
 

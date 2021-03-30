@@ -65,6 +65,18 @@ public class Gumdrop : MonoBehaviour
         }
     }
 
+    public SpriteRenderer GetSpriteRenderer
+    {
+        get
+        {
+            return spriteRenderer;
+        }
+        set
+        {
+            spriteRenderer = value;
+        }
+    }
+
     public int GetScoreValue
     {
         get
@@ -120,7 +132,21 @@ public class Gumdrop : MonoBehaviour
 
     private void OnEnable()
     {
-        ChooseColor();
+        if(targetColor != null)
+        {
+            if(targetColor.GetStaticColor)
+            {
+                spriteRenderer.color = targetColor.GetImage.color;
+            }
+            else
+            {
+                ChooseColor();
+            }
+        }
+        else
+        {
+            ChooseColor();
+        }
 
         DefaultScore = ScoreValue;
         DefaultMoveSpeed = MoveSpeed;
@@ -133,7 +159,7 @@ public class Gumdrop : MonoBehaviour
         transform.Rotate(0, 0, RotationSpeed * Time.deltaTime);
     }
 
-    private Color ChooseColor()
+    public Color ChooseColor()
     {
         ColorIndex = Random.Range(0, colors.Length);
 

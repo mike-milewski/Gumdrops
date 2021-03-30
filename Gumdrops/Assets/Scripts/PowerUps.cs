@@ -16,6 +16,18 @@ public class PowerUps : MonoBehaviour
 
     private int PowerUpIndex;
 
+    public int GetPowerUpIndex
+    {
+        get
+        {
+            return PowerUpIndex;
+        }
+        set
+        {
+            PowerUpIndex = value;
+        }
+    }
+
     private PowerUpManager powerUpManager;
 
     public PowerUpManager GetPowerUpManager
@@ -67,6 +79,28 @@ public class PowerUps : MonoBehaviour
         }
     }
 
+    private bool CheckIfPowerExists()
+    {
+        var exists = false;
+
+        if(powerUpManager != null)
+        {
+            foreach(PowerUpSymbol pus in powerUpManager.GetPowerUpSymbolParent.GetComponentsInChildren<PowerUpSymbol>())
+            {
+                if(pus.GetPowerUps.powers[PowerUpIndex] == powers[PowerUpIndex])
+                {
+                    exists = true;
+                }
+                else
+                {
+                    exists = false;
+                }
+            }
+        }
+
+        return exists;
+    }
+
     private void FindPowerUpManager()
     {
         if (powerUpManager == null)
@@ -92,11 +126,28 @@ public class PowerUps : MonoBehaviour
                 SameColorPower();
                 break;
         }
+        powerUpManager.CreatePowerUpSymbol();
+    }
+
+    public void LosePower(int index)
+    {
+        switch (powers[index])
+        {
+            case (Powers.DoublePoints):
+                LoseDoublePointsPower();
+                break;
+            case (Powers.Slow):
+                LoseSlowPower();
+                break;
+            case (Powers.SameColor):
+                LoseSameColorPower();
+                break;
+        }
     }
 
     private void DoublePointsPower()
     {
-        var gumDrop = FindObjectsOfType<Gumdrop>(false);
+        var gumDrop = FindObjectsOfType<Gumdrop>(true);
 
         foreach(Gumdrop gd in gumDrop)
         {
@@ -106,7 +157,7 @@ public class PowerUps : MonoBehaviour
 
     private void SlowPower()
     {
-        var gumDrop = FindObjectsOfType<Gumdrop>(false);
+        var gumDrop = FindObjectsOfType<Gumdrop>(true);
 
         foreach(Gumdrop gd in gumDrop)
         {
@@ -116,6 +167,53 @@ public class PowerUps : MonoBehaviour
 
     private void SameColorPower()
     {
-        var gumDrop = FindObjectsOfType<Gumdrop>(false);
+        var gumDrop = FindObjectsOfType<Gumdrop>(true);
+        var targetColor = FindObjectOfType<TargetColor>();
+
+        targetColor.GetStaticColor = true;
+
+        foreach (Gumdrop gd in gumDrop)
+        {
+            gd.GetSpriteRenderer.color = targetColor.GetImage.color;
+        }
+    }
+
+    private void LoseDoublePointsPower()
+    {
+        var gumDrop = FindObjectsOfType<Gumdrop>(true);
+
+        Debug.Log("Lost Double Points Power");
+
+        foreach (Gumdrop gd in gumDrop)
+        {
+            gd.GetScoreValue = gd.GetDefaultScore;
+        }
+    }
+
+    private void LoseSlowPower()
+    {
+        var gumDrop = FindObjectsOfType<Gumdrop>(true);
+
+        Debug.Log("Lost Slow Power");
+
+        foreach (Gumdrop gd in gumDrop)
+        {
+            gd.GetMoveSpeed = gd.GetDefaultMoveSpeed;
+        }
+    }
+
+    private void LoseSameColorPower()
+    {
+        var gumDrop = FindObjectsOfType<Gumdrop>(true);
+        var targetColor = FindObjectOfType<TargetColor>();
+
+        targetColor.GetStaticColor = false;
+
+        Debug.Log("Lost Same Color Power");
+
+        foreach (Gumdrop gd in gumDrop)
+        {
+            gd.ChooseColor();
+        }
     }
 }

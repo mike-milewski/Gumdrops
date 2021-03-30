@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     private GameObject GameOverMenu;
 
     [SerializeField]
+    private Transform PowerUpSymbolParent;
+
+    [SerializeField]
     private Button menuButton;
 
     [SerializeField]
@@ -79,7 +82,7 @@ public class GameManager : MonoBehaviour
 
         scoreManager.UpdateScoreText();
 
-        targetColor.SetStartingColorTimeAndColor();
+        targetColor.SetStartingTimeAndColor();
 
         TargetScoreText.text = TargetScore.ToString();
     }
@@ -101,6 +104,17 @@ public class GameManager : MonoBehaviour
         foreach (PowerUpMovement pum in powerUpMovement)
         {
             ObjectPooler.Instance.ReturnPowerUpToPool(pum.gameObject);
+        }
+    }
+
+    public void DestroyPowerUpSymbols()
+    {
+        foreach(PowerUpSymbol pum in PowerUpSymbolParent.GetComponentsInChildren<PowerUpSymbol>())
+        {
+            if(pum != null)
+            {
+                Destroy(pum);
+            }
         }
     }
 

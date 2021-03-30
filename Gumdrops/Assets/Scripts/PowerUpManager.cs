@@ -6,20 +6,54 @@ public class PowerUpManager : MonoBehaviour
     private PowerUps powerUp;
 
     [SerializeField]
+    private PowerUpSymbol powerUpSymbol;
+
+    [SerializeField]
+    private Transform PowerUpSymbolParent;
+
+    [SerializeField]
     private float PowerUpSpawnTime, PowerUpSpawnChance;
 
-    private float PowerUpTime;
+    [SerializeField]
+    private float DefaultPowerUpTime;
+
+    public Transform GetPowerUpSymbolParent
+    {
+        get
+        {
+            return PowerUpSymbolParent;
+        }
+        set
+        {
+            PowerUpSymbolParent = value;
+        }
+    }
+
+    private void OnEnable()
+    {
+        ResetPowerUpTime();
+    }
 
     private void Start()
     {
         FindPowerUp();
     }
 
+    private void Update()
+    {
+        DefaultPowerUpTime -= Time.deltaTime;
+        if(DefaultPowerUpTime <= 0)
+        {
+            DefaultPowerUpTime = 0;
+            return;
+        }
+    }
+
     public bool PowerUpSpawn()
     {
         bool Spawned = false;
 
-        if(Random.value * 100 <= PowerUpSpawnChance && !powerUp.gameObject.activeInHierarchy)
+        if(Random.value * 100 <= PowerUpSpawnChance && !powerUp.gameObject.activeInHierarchy && DefaultPowerUpTime <= 0)
         {
             SpawnPowerUp();
             Spawned = true;
@@ -45,7 +79,23 @@ public class PowerUpManager : MonoBehaviour
         var power = FindObjectOfType<PowerUps>(true);
 
         powerUp = power;
+    }
 
-        PowerUpTime = powerUp.GetPowerTime;
+    public void CreatePowerUpSymbol()
+    {
+        var pus = Instantiate(powerUpSymbol);
+
+        pus.GetPowerUps = powerUp;
+        pus.GetPowerUpTime = powerUp.GetPowerTime;
+        pus.GetPowerUpIndex = powerUp.GetPowerUpIndex;
+
+        pus.transform.SetParent(PowerUpSymbolParent);
+
+        pus.GetComponent<Image>().sprite = powerUp.GetComponent<SpriteRenderer>().sprite;
+    }
+
+    public void ResetPowerUpTime()
+    {
+        DefaultPowerUpTime = PowerUpSpawnTime;
     }
 }
