@@ -1,15 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Gumdrop : MonoBehaviour
 {
     [SerializeField]
-    private float MoveSpeed, RotationSpeed;
+    private float MainMenuMoveSpeed, GameMoveSpeed, RotationSpeed, MoveSpeed, DefaultMoveSpeed, IncrementalMoveSpeed;
 
     [SerializeField]
     private SpriteRenderer spriteRenderer;
-
-    private Color color;
 
     [SerializeField]
     private ColorList[] colors;
@@ -17,11 +16,9 @@ public class Gumdrop : MonoBehaviour
     [SerializeField]
     private int ScoreValue;
 
-    private int DefaultScore;
+    private Color color;
 
-    private int ColorIndex;
-
-    private float DefaultMoveSpeed;
+    private int DefaultScore, ColorIndex;
 
     private ObjectPooler objectPooler;
 
@@ -113,6 +110,30 @@ public class Gumdrop : MonoBehaviour
         }
     }
 
+    public float GetMainMenuMoveSpeed
+    {
+        get
+        {
+            return MainMenuMoveSpeed;
+        }
+        set
+        {
+            MainMenuMoveSpeed = value;
+        }
+    }
+
+    public float GetGameMoveSpeed
+    {
+        get
+        {
+            return GameMoveSpeed;
+        }
+        set
+        {
+            GameMoveSpeed = value;
+        }
+    }
+
     public float GetDefaultMoveSpeed
     {
         get
@@ -125,9 +146,35 @@ public class Gumdrop : MonoBehaviour
         }
     }
 
+    public float GetIncrementalMoveSpeed
+    {
+        get
+        {
+            return IncrementalMoveSpeed;
+        }
+        set
+        {
+            IncrementalMoveSpeed = value;
+        }
+    }
+
+    public float GetRotationSpeed
+    {
+        get
+        {
+            return RotationSpeed;
+        }
+        set
+        {
+            RotationSpeed = value;
+        }
+    }
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        DefaultScore = ScoreValue;
     }
 
     private void OnEnable()
@@ -147,9 +194,6 @@ public class Gumdrop : MonoBehaviour
         {
             ChooseColor();
         }
-
-        DefaultScore = ScoreValue;
-        DefaultMoveSpeed = MoveSpeed;
     }
 
     private void Update()

@@ -9,7 +9,7 @@ public class TargetColor : MonoBehaviour
     private ColorList[] color;
 
     [SerializeField]
-    private Image image;
+    private Image image, NextColorImage;
 
     [SerializeField]
     private float DefaultTimeToChangeColor;
@@ -18,7 +18,7 @@ public class TargetColor : MonoBehaviour
 
     private int ColorIndex;
 
-    private bool StaticColor;
+    private bool StaticColor, AboutToSwitchColor;
 
     public Image GetImage
     {
@@ -54,19 +54,66 @@ public class TargetColor : MonoBehaviour
         if(!StaticColor)
         {
             TimeToChangeColor -= Time.deltaTime;
+            if(TimeToChangeColor <= 3 && !AboutToSwitchColor)
+            {
+                AboutToSwitchColor = true;
+                RandomColorIndex();
+            }
             if (TimeToChangeColor <= 0)
             {
                 ChooseColor();
+                AboutToSwitchColor = false;
+                NextColorImage.color = Color.white;
                 TimeToChangeColor = DefaultTimeToChangeColor;
             }
         }
     }
 
-    private void ChooseColor()
+    private void RandomColorIndex()
     {
         ColorIndex = Random.Range(0, color.Length);
 
+        switch (color[ColorIndex])
+        {
+            case (ColorList.Red):
+                NextColorImage.color = Color.red;
+                break;
+            case (ColorList.Blue):
+                NextColorImage.color = Color.blue;
+                break;
+            case (ColorList.Green):
+                NextColorImage.color = Color.green;
+                break;
+            case (ColorList.Yellow):
+                NextColorImage.color = Color.yellow;
+                break;
+        }
+    }
+
+    private void ChooseColor()
+    {
         switch(color[ColorIndex])
+        {
+            case (ColorList.Red):
+                image.color = Color.red;
+                break;
+            case (ColorList.Blue):
+                image.color = Color.blue;
+                break;
+            case (ColorList.Green):
+                image.color = Color.green;
+                break;
+            case (ColorList.Yellow):
+                image.color = Color.yellow;
+                break;
+        }
+    }
+
+    private void ChooseRandomColorFromStart()
+    {
+        ColorIndex = Random.Range(0, color.Length);
+
+        switch (color[ColorIndex])
         {
             case (ColorList.Red):
                 image.color = Color.red;
@@ -92,6 +139,6 @@ public class TargetColor : MonoBehaviour
     {
         TimeToChangeColor = DefaultTimeToChangeColor;
 
-        ChooseColor();
+        ChooseRandomColorFromStart();
     }
 }

@@ -5,6 +5,7 @@ public class PowerUpSymbol : MonoBehaviour
 {
     private PowerUps powerUp;
 
+    [SerializeField]
     private float PowerUpTime;
 
     private int PowerUpIndex;
@@ -45,6 +46,18 @@ public class PowerUpSymbol : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        FindPowerUpManager();
+    }
+
+    private void FindPowerUpManager()
+    {
+        var pum = FindObjectOfType<PowerUpManager>();
+
+        pum.GetTempPowerUpIndex = PowerUpIndex;
+    }
+
     private void Update()
     {
         PowerUpTime -= Time.deltaTime;
@@ -56,7 +69,7 @@ public class PowerUpSymbol : MonoBehaviour
 
     private void EndPowerUp()
     {
-        powerUp.LosePower(powerUp.GetPowerUpIndex);
+        powerUp.LosePower(PowerUpIndex);
         Destroy(gameObject);
     }
 }

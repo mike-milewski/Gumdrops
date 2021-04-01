@@ -33,13 +33,13 @@ public class TouchInput : MonoBehaviour
             {
                 RaycastHit2D hit = Physics2D.Raycast(touchPosition, touch.position, layermask);
 
-                if(hit && hit.collider.GetComponent<Gumdrop>() && !EventSystem.current.IsPointerOverGameObject(0) && scene.buildIndex != 0)
+                if(hit && hit.collider.GetComponent<Gumdrop>() && !EventSystem.current.IsPointerOverGameObject(0) && scene.buildIndex != 0 && Time.timeScale > 0)
                 {
                     hit.collider.GetComponent<Gumdrop>().CheckColor();
 
                     ObjectPooler.Instance.ReturnGumDropToPool(hit.collider.GetComponent<Gumdrop>().gameObject);
                 }
-                else if(hit && hit.collider.GetComponent<PowerUps>() && !EventSystem.current.IsPointerOverGameObject(0))
+                else if(hit && hit.collider.GetComponent<PowerUps>() && !EventSystem.current.IsPointerOverGameObject(0) && Time.timeScale > 0)
                 {
                     hit.collider.GetComponent<PowerUps>().GetPower();
 

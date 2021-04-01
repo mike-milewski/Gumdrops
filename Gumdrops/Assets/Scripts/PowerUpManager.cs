@@ -17,6 +17,20 @@ public class PowerUpManager : MonoBehaviour
     [SerializeField]
     private float DefaultPowerUpTime;
 
+    private int TempPowerUpIndex;
+
+    public int GetTempPowerUpIndex
+    {
+        get
+        {
+            return TempPowerUpIndex;
+        }
+        set
+        {
+            TempPowerUpIndex = value;
+        }
+    }
+
     public Transform GetPowerUpSymbolParent
     {
         get
@@ -83,19 +97,50 @@ public class PowerUpManager : MonoBehaviour
 
     public void CreatePowerUpSymbol()
     {
-        var pus = Instantiate(powerUpSymbol);
+        if(!ResetPowerUpSymbolTime())
+        {
+            var pus = Instantiate(powerUpSymbol);
 
-        pus.GetPowerUps = powerUp;
-        pus.GetPowerUpTime = powerUp.GetPowerTime;
-        pus.GetPowerUpIndex = powerUp.GetPowerUpIndex;
+            pus.GetPowerUps = powerUp;
+            pus.GetPowerUpTime = powerUp.GetPowerTime;
+            TempPowerUpIndex = powerUp.GetPowerUpIndex;
+            pus.GetPowerUpIndex = TempPowerUpIndex;
 
-        pus.transform.SetParent(PowerUpSymbolParent);
+            pus.transform.SetParent(PowerUpSymbolParent);
 
-        pus.GetComponent<Image>().sprite = powerUp.GetComponent<SpriteRenderer>().sprite;
+            pus.GetComponent<Image>().sprite = powerUp.GetComponent<SpriteRenderer>().sprite;
+        }
     }
 
     public void ResetPowerUpTime()
     {
         DefaultPowerUpTime = PowerUpSpawnTime;
+    }
+
+    public bool ResetPowerUpSymbolTime()
+    {
+        var exists = false;
+
+        foreach (PowerUpSymbol pus in PowerUpSymbolParent.GetComponentsInChildren<PowerUpSymbol>())
+        {
+            if(pus != null)
+            {
+                if (pus.GetPowerUpIndex == powerUp.GetPowerUpIndex)
+                {
+                    exists = true;
+                    pus.GetPowerUpTime = powerUp.GetPowerTime;
+                    return exists;
+                }
+                else
+                {
+                    exists = false;
+                }
+            }
+            else
+            {
+                exists = false;
+            }
+        }
+        return exists;
     }
 }

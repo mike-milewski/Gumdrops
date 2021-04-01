@@ -5,6 +5,10 @@ public enum Powers { DoublePoints, Slow, SameColor }
 
 public class PowerUps : MonoBehaviour
 {
+    private PowerUpManager powerUpManager;
+
+    private ObjectPooler objectPooler;
+
     [SerializeField]
     private Sprite DoublePointsSprite, SlowSprite, SameColorSprite;
 
@@ -28,7 +32,17 @@ public class PowerUps : MonoBehaviour
         }
     }
 
-    private PowerUpManager powerUpManager;
+    public Powers[] GetPowers
+    {
+        get
+        {
+            return powers;
+        }
+        set
+        {
+            powers = value;
+        }
+    }
 
     public PowerUpManager GetPowerUpManager
     {
@@ -57,8 +71,13 @@ public class PowerUps : MonoBehaviour
     private void OnEnable()
     {
         ChoosePower();
+    }
 
+    private void Awake()
+    {
         FindPowerUpManager();
+
+        FindObjectPooler();
     }
 
     private void ChoosePower()
@@ -79,28 +98,6 @@ public class PowerUps : MonoBehaviour
         }
     }
 
-    private bool CheckIfPowerExists()
-    {
-        var exists = false;
-
-        if(powerUpManager != null)
-        {
-            foreach(PowerUpSymbol pus in powerUpManager.GetPowerUpSymbolParent.GetComponentsInChildren<PowerUpSymbol>())
-            {
-                if(pus.GetPowerUps.powers[PowerUpIndex] == powers[PowerUpIndex])
-                {
-                    exists = true;
-                }
-                else
-                {
-                    exists = false;
-                }
-            }
-        }
-
-        return exists;
-    }
-
     private void FindPowerUpManager()
     {
         if (powerUpManager == null)
@@ -112,19 +109,29 @@ public class PowerUps : MonoBehaviour
         else return;
     }
 
+    private void FindObjectPooler()
+    {
+        var OP = FindObjectOfType<ObjectPooler>();
+
+        objectPooler = OP;
+    }
+
     public void GetPower()
     {
-        switch (powers[PowerUpIndex])
+        if (!powerUpManager.ResetPowerUpSymbolTime())
         {
-            case (Powers.DoublePoints):
-                DoublePointsPower();
-                break;
-            case (Powers.Slow):
-                SlowPower();
-                break;
-            case (Powers.SameColor):
-                SameColorPower();
-                break;
+            switch (powers[PowerUpIndex])
+            {
+                case (Powers.DoublePoints):
+                    DoublePointsPower();
+                    break;
+                case (Powers.Slow):
+                    SlowPower();
+                    break;
+                case (Powers.SameColor):
+                    SameColorPower();
+                    break;
+            }
         }
         powerUpManager.CreatePowerUpSymbol();
     }
@@ -162,7 +169,9 @@ public class PowerUps : MonoBehaviour
         foreach(Gumdrop gd in gumDrop)
         {
             gd.GetMoveSpeed /= 2;
+            gd.GetRotationSpeed /= 2;
         }
+        objectPooler.GetDefaultSpawnTimer = 2;
     }
 
     private void SameColorPower()
@@ -182,8 +191,6 @@ public class PowerUps : MonoBehaviour
     {
         var gumDrop = FindObjectsOfType<Gumdrop>(true);
 
-        Debug.Log("Lost Double Points Power");
-
         foreach (Gumdrop gd in gumDrop)
         {
             gd.GetScoreValue = gd.GetDefaultScore;
@@ -194,12 +201,12 @@ public class PowerUps : MonoBehaviour
     {
         var gumDrop = FindObjectsOfType<Gumdrop>(true);
 
-        Debug.Log("Lost Slow Power");
-
         foreach (Gumdrop gd in gumDrop)
         {
-            gd.GetMoveSpeed = gd.GetDefaultMoveSpeed;
+            gd.GetMoveSpeed = gd.GetIncrementalMoveSpeed;
+            gd.GetRotationSpeed *= 2;
         }
+        objectPooler.GetDefaultSpawnTimer = 1;
     }
 
     private void LoseSameColorPower()
@@ -208,8 +215,7 @@ public class PowerUps : MonoBehaviour
         var targetColor = FindObjectOfType<TargetColor>();
 
         targetColor.GetStaticColor = false;
-
-        Debug.Log("Lost Same Color Power");
+        targetColor.SetTimer();
 
         foreach (Gumdrop gd in gumDrop)
         {

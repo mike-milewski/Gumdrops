@@ -23,10 +23,12 @@ public class GameManager : MonoBehaviour
     private Button menuButton;
 
     [SerializeField]
-    private int DefaultTargetScore, TargetScore, ScoreIncrement, GumDropMoveSpeedIncrement;
+    private int DefaultTargetScore, ScoreIncrement, GumDropMoveSpeedIncrement, MaxSpeed;
 
     [SerializeField]
     private float StartTimer;
+
+    private float TargetScore;
 
     private float Timer;
 
@@ -89,7 +91,7 @@ public class GameManager : MonoBehaviour
 
     public void ResetGumDrops()
     {
-        var gumDrops = FindObjectsOfType<Gumdrop>(false);
+        var gumDrops = FindObjectsOfType<Gumdrop>(true);
 
         foreach(Gumdrop gd in gumDrops)
         {
@@ -99,7 +101,7 @@ public class GameManager : MonoBehaviour
 
     public void ResetPowerUp()
     {
-        var powerUpMovement = FindObjectsOfType<PowerUpMovement>(false);
+        var powerUpMovement = FindObjectsOfType<PowerUpMovement>(true);
 
         foreach (PowerUpMovement pum in powerUpMovement)
         {
@@ -113,34 +115,45 @@ public class GameManager : MonoBehaviour
         {
             if(pum != null)
             {
-                Destroy(pum);
+                pum.GetPowerUps.LosePower(pum.GetPowerUpIndex);
+                Destroy(pum.gameObject);
             }
         }
     }
 
     private void IncreaseGumDropAndPowerUpSpeed()
     {
-        var gumDrops = FindObjectsOfType<Gumdrop>(false);
-        var powerUpMovement = FindObjectsOfType<PowerUpMovement>(false);
+        var gumDrops = FindObjectsOfType<Gumdrop>(true);
+        var powerUpMovement = FindObjectsOfType<PowerUpMovement>(true);
 
         foreach (Gumdrop gd in gumDrops)
         {
-            gd.GetMoveSpeed += GumDropMoveSpeedIncrement;
+            if(gd.GetMoveSpeed < MaxSpeed)
+            {
+                gd.GetMoveSpeed += GumDropMoveSpeedIncrement;
+                gd.GetMoveSpeed = Mathf.Clamp(gd.GetMoveSpeed, 0, MaxSpeed);
+                gd.GetIncrementalMoveSpeed = gd.GetMoveSpeed;
+            }
         }
         foreach (PowerUpMovement pum in powerUpMovement)
         {
-            pum.GetMoveSpeed += GumDropMoveSpeedIncrement;
+            if(pum.GetMoveSpeed < MaxSpeed)
+            {
+                pum.GetMoveSpeed += GumDropMoveSpeedIncrement;
+                pum.GetMoveSpeed = Mathf.Clamp(pum.GetMoveSpeed, 0, MaxSpeed);
+            }
         }
     }
 
-    public void RestGumDropAndPowerUpSpeed()
+    public void ResetGumDropAndPowerUpSpeed()
     {
-        var gumDrops = FindObjectsOfType<Gumdrop>(false);
-        var powerUpMovement = FindObjectsOfType<PowerUpMovement>(false);
+        var gumDrops = FindObjectsOfType<Gumdrop>(true);
+        var powerUpMovement = FindObjectsOfType<PowerUpMovement>(true);
 
         foreach (Gumdrop gd in gumDrops)
         {
             gd.GetMoveSpeed = gd.GetDefaultMoveSpeed;
+            gd.GetIncrementalMoveSpeed = gd.GetMoveSpeed;
         }
         foreach (PowerUpMovement pum in powerUpMovement)
         {

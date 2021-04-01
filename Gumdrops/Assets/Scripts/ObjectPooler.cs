@@ -122,7 +122,7 @@ public class ObjectPooler : MonoBehaviour
     private Transform GumDropParent, TouchParticleParent;
 
     [SerializeField]
-    private float DefaultSpawnTimer;
+    private float DefaultSpawnTimer, MainMenuSpawnTimer, MainGameSpawnTimer;
 
     private float SpawnTimer;
 
@@ -135,6 +135,30 @@ public class ObjectPooler : MonoBehaviour
         set
         {
             boundary = value;
+        }
+    }
+
+    public float GetMainGameSpawnTimer
+    {
+        get
+        {
+            return MainGameSpawnTimer;
+        }
+        set
+        {
+            MainGameSpawnTimer = value;
+        }
+    }
+
+    public float GetDefaultSpawnTimer
+    {
+        get
+        {
+            return DefaultSpawnTimer;
+        }
+        set
+        {
+            DefaultSpawnTimer = value;
         }
     }
 
@@ -151,8 +175,6 @@ public class ObjectPooler : MonoBehaviour
         }
         #endregion
 
-        SpawnTimer = DefaultSpawnTimer;
-
         AddGumDrops(poolcontroller[0].GetPoolAmount);
         AddTouchParticle(poolcontroller[1].GetPoolAmount);
         AddPowerUp(poolcontroller[2].GetPoolAmount);
@@ -161,6 +183,23 @@ public class ObjectPooler : MonoBehaviour
     private void OnEnable()
     {
         CheckPowerUpManager();
+
+        CheckScene();
+    }
+
+    private void CheckScene()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+
+        if(scene.buildIndex == 0)
+        {
+            DefaultSpawnTimer = MainMenuSpawnTimer;
+        }
+        else
+        {
+            DefaultSpawnTimer = MainGameSpawnTimer;
+        }
+        SpawnTimer = DefaultSpawnTimer;
     }
 
     private void Update()
@@ -224,6 +263,14 @@ public class ObjectPooler : MonoBehaviour
                 PO.GetComponent<Gumdrop>().GetTargetColor = targetColor;
                 PO.GetComponent<Gumdrop>().GetScoreManager = scoreManager;
                 PO.GetComponent<Gumdrop>().GetObjectPooler = this;
+
+                PO.GetComponent<Gumdrop>().GetMoveSpeed = PO.GetComponent<Gumdrop>().GetGameMoveSpeed;
+                PO.GetComponent<Gumdrop>().GetDefaultMoveSpeed = PO.GetComponent<Gumdrop>().GetMoveSpeed;
+                PO.GetComponent<Gumdrop>().GetIncrementalMoveSpeed = PO.GetComponent<Gumdrop>().GetMoveSpeed;
+            }
+            else
+            {
+                PO.GetComponent<Gumdrop>().GetMoveSpeed = PO.GetComponent<Gumdrop>().GetMainMenuMoveSpeed;
             }
 
             PO.gameObject.SetActive(false);
