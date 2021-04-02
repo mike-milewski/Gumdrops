@@ -11,6 +11,9 @@ public class Gumdrop : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     [SerializeField]
+    private Sprite[] GumDropColors;
+
+    [SerializeField]
     private ColorList[] colors;
 
     [SerializeField]
@@ -210,20 +213,18 @@ public class Gumdrop : MonoBehaviour
         switch(colors[ColorIndex])
         {
             case (ColorList.Red):
-                color = Color.red;
+                spriteRenderer.sprite = GumDropColors[ColorIndex];
                 break;
             case (ColorList.Blue):
-                color = Color.blue;
+                spriteRenderer.sprite = GumDropColors[ColorIndex];
                 break;
             case (ColorList.Green):
-                color = Color.green;
+                spriteRenderer.sprite = GumDropColors[ColorIndex];
                 break;
             case (ColorList.Yellow):
-                color = Color.yellow;
+                spriteRenderer.sprite = GumDropColors[ColorIndex];
                 break;
         }
-        spriteRenderer.color = color;
-
         return color;
     }
 

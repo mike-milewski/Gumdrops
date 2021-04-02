@@ -29,7 +29,7 @@ RectTransform:
   m_GameObject: {fileID: 2682672891622776841}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 1}
+  m_LocalScale: {x: 7, y: 7, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d0b21f368a45f91479cd9a4c94975afd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -128,14 +128,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 12.801395, y: 13.989999}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 11.9, y: 14.09}
   m_EdgeRadius: 0
 --- !u!114 &2682672891622776844
 MonoBehaviour:
@@ -152,6 +152,14 @@ MonoBehaviour:
   MainMenuMoveSpeed: 300
   GameMoveSpeed: 200
   RotationSpeed: 60
+  MoveSpeed: 0
+  DefaultMoveSpeed: 0
+  IncrementalMoveSpeed: 0
   spriteRenderer: {fileID: 2682672891622776846}
+  GumDropColors:
+  - {fileID: 21300000, guid: d0b21f368a45f91479cd9a4c94975afd, type: 3}
+  - {fileID: 21300000, guid: 854731df5bff2d447bb0a6a63a628aa1, type: 3}
+  - {fileID: 21300000, guid: 99ec597f9e4e3aa46a1a4a30493ee321, type: 3}
+  - {fileID: 21300000, guid: b0d80db906b5da44d9054a959d01b15b, type: 3}
   colors: 00000000010000000200000003000000
   ScoreValue: 10
