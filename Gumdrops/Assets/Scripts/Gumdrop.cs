@@ -101,6 +101,18 @@ public class Gumdrop : MonoBehaviour
         }
     }
 
+    public int GetColorIndex
+    {
+        get
+        {
+            return ColorIndex;
+        }
+        set
+        {
+            ColorIndex = value;
+        }
+    }
+
     public float GetMoveSpeed
     {
         get
@@ -186,7 +198,7 @@ public class Gumdrop : MonoBehaviour
         {
             if(targetColor.GetStaticColor)
             {
-                spriteRenderer.color = targetColor.GetImage.color;
+                spriteRenderer.sprite = targetColor.GetGumDropColors[targetColor.GetColorIndex];
             }
             else
             {
@@ -206,31 +218,16 @@ public class Gumdrop : MonoBehaviour
         transform.Rotate(0, 0, RotationSpeed * Time.deltaTime);
     }
 
-    public Color ChooseColor()
+    public void ChooseColor()
     {
         ColorIndex = Random.Range(0, colors.Length);
 
-        switch(colors[ColorIndex])
-        {
-            case (ColorList.Red):
-                spriteRenderer.sprite = GumDropColors[ColorIndex];
-                break;
-            case (ColorList.Blue):
-                spriteRenderer.sprite = GumDropColors[ColorIndex];
-                break;
-            case (ColorList.Green):
-                spriteRenderer.sprite = GumDropColors[ColorIndex];
-                break;
-            case (ColorList.Yellow):
-                spriteRenderer.sprite = GumDropColors[ColorIndex];
-                break;
-        }
-        return color;
+        spriteRenderer.sprite = GumDropColors[ColorIndex];
     }
 
     public void CheckColor()
     {
-        if(spriteRenderer.color == targetColor.GetComponent<Image>().color)
+        if(ColorIndex == targetColor.GetColorIndex)
         {
             AddGumDropScore();
         }

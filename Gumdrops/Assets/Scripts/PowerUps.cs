@@ -183,8 +183,10 @@ public class PowerUps : MonoBehaviour
 
         foreach (Gumdrop gd in gumDrop)
         {
-            gd.GetSpriteRenderer.color = targetColor.GetImage.color;
+            gd.GetSpriteRenderer.sprite = targetColor.GetTargetImage.sprite;
+            gd.GetColorIndex = targetColor.GetColorIndex;
         }
+        targetColor.GetNextColorImage.sprite = null;
     }
 
     private void LoseDoublePointsPower()

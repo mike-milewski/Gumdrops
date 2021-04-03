@@ -9,26 +9,65 @@ public class TargetColor : MonoBehaviour
     private ColorList[] color;
 
     [SerializeField]
-    private Image image, NextColorImage;
+    private Image TargetImage, NextColorImage;
+
+    [SerializeField]
+    private Sprite[] GumDropColors;
 
     [SerializeField]
     private float DefaultTimeToChangeColor;
 
     private float TimeToChangeColor;
 
-    private int ColorIndex;
+    private int ColorIndex, RandomIndex;
 
     private bool StaticColor, AboutToSwitchColor;
 
-    public Image GetImage
+    public Image GetTargetImage
     {
         get
         {
-            return image;
+            return TargetImage;
         }
         set
         {
-            image = value;
+            TargetImage = value;
+        }
+    }
+
+    public Image GetNextColorImage
+    {
+        get
+        {
+            return NextColorImage;
+        }
+        set
+        {
+            NextColorImage = value;
+        }
+    }
+
+    public Sprite[] GetGumDropColors
+    {
+        get
+        {
+            return GumDropColors;
+        }
+        set
+        {
+            GumDropColors = value;
+        }
+    }
+
+    public int GetColorIndex
+    {
+        get
+        {
+            return ColorIndex;
+        }
+        set
+        {
+            ColorIndex = value;
         }
     }
 
@@ -44,11 +83,6 @@ public class TargetColor : MonoBehaviour
         }
     } 
 
-    private void Start()
-    {
-        image = GetComponent<Image>();
-    }
-
     private void Update()
     {
         if(!StaticColor)
@@ -63,7 +97,7 @@ public class TargetColor : MonoBehaviour
             {
                 ChooseColor();
                 AboutToSwitchColor = false;
-                NextColorImage.color = Color.white;
+                NextColorImage.sprite = null;
                 TimeToChangeColor = DefaultTimeToChangeColor;
             }
         }
@@ -71,63 +105,22 @@ public class TargetColor : MonoBehaviour
 
     private void RandomColorIndex()
     {
-        ColorIndex = Random.Range(0, color.Length);
+        RandomIndex = Random.Range(0, color.Length);
 
-        switch (color[ColorIndex])
-        {
-            case (ColorList.Red):
-                NextColorImage.color = Color.red;
-                break;
-            case (ColorList.Blue):
-                NextColorImage.color = Color.blue;
-                break;
-            case (ColorList.Green):
-                NextColorImage.color = Color.green;
-                break;
-            case (ColorList.Yellow):
-                NextColorImage.color = Color.yellow;
-                break;
-        }
+        NextColorImage.sprite = GumDropColors[RandomIndex];
     }
 
     private void ChooseColor()
     {
-        switch(color[ColorIndex])
-        {
-            case (ColorList.Red):
-                image.color = Color.red;
-                break;
-            case (ColorList.Blue):
-                image.color = Color.blue;
-                break;
-            case (ColorList.Green):
-                image.color = Color.green;
-                break;
-            case (ColorList.Yellow):
-                image.color = Color.yellow;
-                break;
-        }
+        TargetImage.sprite = GumDropColors[RandomIndex];
+        ColorIndex = RandomIndex;
     }
 
     private void ChooseRandomColorFromStart()
     {
         ColorIndex = Random.Range(0, color.Length);
 
-        switch (color[ColorIndex])
-        {
-            case (ColorList.Red):
-                image.color = Color.red;
-                break;
-            case (ColorList.Blue):
-                image.color = Color.blue;
-                break;
-            case (ColorList.Green):
-                image.color = Color.green;
-                break;
-            case (ColorList.Yellow):
-                image.color = Color.yellow;
-                break;
-        }
+        TargetImage.sprite = GumDropColors[ColorIndex];
     }
 
     public void SetTimer()

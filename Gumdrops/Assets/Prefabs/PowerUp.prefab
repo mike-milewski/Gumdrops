@@ -31,7 +31,7 @@ RectTransform:
   m_GameObject: {fileID: 3578594078837910392}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 50, y: 50, z: 1}
+  m_LocalScale: {x: 30, y: 30, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -94,7 +94,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.56, y: 2.56}
+  m_Size: {x: 3.03, y: 3.03}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -115,7 +115,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.94
+  m_Radius: 1.25
 --- !u!114 &3578594078837910399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,8 +162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d45f70f63242af141b198fe73123457e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DoublePointsSprite: {fileID: 21300000, guid: f2b6ce89983aa214fbf3e65e86cc62dc, type: 3}
-  SlowSprite: {fileID: 21300000, guid: 7f22cacf338570644bb8ab3200113e18, type: 3}
+  DoublePointsSprite: {fileID: 21300000, guid: 236d518cc3e07bf40b73f5c91729e318, type: 3}
+  SlowSprite: {fileID: 21300000, guid: cacc4721756499948bb5d35d5e8c8e1e, type: 3}
   SameColorSprite: {fileID: 21300000, guid: 2a1d320fed6fa0243b30c74807f554ef, type: 3}
   powers: 000000000100000002000000
   PowerTime: 10
