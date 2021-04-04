@@ -77,7 +77,6 @@ public class PowerUpManager : MonoBehaviour
             ObjectPooler.Instance.SpawnGumDrop();
             Spawned = false;
         }
-
         return Spawned;
     }
 
