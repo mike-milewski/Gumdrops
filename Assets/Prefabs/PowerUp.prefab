@@ -4907,7 +4907,7 @@ SpriteRenderer:
   m_Size: {x: 5, y: 4.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!58 &8614461639691865382
@@ -4973,7 +4973,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DoublePointsSprite: {fileID: 21300000, guid: 236d518cc3e07bf40b73f5c91729e318, type: 3}
-  SlowSprite: {fileID: 21300000, guid: cacc4721756499948bb5d35d5e8c8e1e, type: 3}
+  SlowSprite: {fileID: 21300000, guid: 7ffc9aa80fd5f3144a2f6cb11c103de0, type: 3}
   SameColorSprite: {fileID: 21300000, guid: d014221f2e3de254ea5bfbac6d8d0069, type: 3}
   powers: 000000000100000002000000
   PowerTime: 10
