@@ -9,6 +9,8 @@ public class Boundary
     [SerializeField]
     private Camera cam;
 
+    private Scene scene;
+
     [SerializeField]
     private float MinX, MaxX;
 
@@ -16,7 +18,16 @@ public class Boundary
 
     public Vector2 SetBoundaries()
     {
-        bounds = cam.ViewportToWorldPoint(new Vector3(Random.Range(MinX, MaxX), 1, 10));
+        scene = SceneManager.GetActiveScene();
+
+        if (scene.buildIndex != 1)
+        {
+            bounds = cam.ViewportToWorldPoint(new Vector3(Random.Range(MinX, MaxX), 1, 10));
+        }
+        else
+        {
+            bounds = cam.ViewportToWorldPoint(new Vector3(Random.Range(MinX, MaxX), 0.9f, 10));
+        }
 
         return bounds;
     }

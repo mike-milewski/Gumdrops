@@ -950,8 +950,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 21c3de1abf7995642a3e4f47b8661f03, type: 2}
-  m_sharedMaterial: {fileID: 7558952155114120201, guid: 21c3de1abf7995642a3e4f47b8661f03, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 63da36be7b26cd9478a311b01375a288, type: 2}
+  m_sharedMaterial: {fileID: 4439550005897854532, guid: 63da36be7b26cd9478a311b01375a288, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1596,10 +1596,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1214673703}
     - target: {fileID: 3386047993023684154, guid: a3358cad50350b347a320e0044cb6c4a, type: 3}
-      propertyPath: MainMenuSpawnTimer
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3386047993023684154, guid: a3358cad50350b347a320e0044cb6c4a, type: 3}
       propertyPath: TouchParticleParent
       value: 
       objectReference: {fileID: 336944401}
@@ -1952,14 +1948,14 @@ RectTransform:
   m_GameObject: {fileID: 1437431879}
   m_LocalRotation: {x: -0, y: -0, z: 0.2965334, w: 0.9550225}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.91826487, y: 0.91826487, z: 0.91826487}
+  m_LocalScale: {x: 1.0138562, y: 1.0138562, z: 1.0138562}
   m_Children: []
   m_Father: {fileID: 1119097272}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 34.499}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 520.7, y: -5.5}
+  m_AnchoredPosition: {x: 521.1, y: -2}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1437431881

@@ -9,7 +9,7 @@ public class TargetColor : MonoBehaviour
     private ColorList[] color;
 
     [SerializeField]
-    private Image TargetImage, NextColorImage;
+    private Image TargetImage, NextColorImage, ColorFrame;
 
     [SerializeField]
     private Sprite[] GumDropColors;
@@ -88,6 +88,9 @@ public class TargetColor : MonoBehaviour
         if(!StaticColor)
         {
             TimeToChangeColor -= Time.deltaTime;
+
+            ColorFrame.fillAmount = TimeToChangeColor / DefaultTimeToChangeColor;
+
             if(TimeToChangeColor <= 3 && !AboutToSwitchColor)
             {
                 AboutToSwitchColor = true;
@@ -106,6 +109,11 @@ public class TargetColor : MonoBehaviour
     private void RandomColorIndex()
     {
         RandomIndex = Random.Range(0, color.Length);
+
+        if(RandomIndex == ColorIndex)
+        {
+            RandomIndex = Random.Range(0, color.Length);
+        }
 
         NextColorImage.sprite = GumDropColors[RandomIndex];
     }

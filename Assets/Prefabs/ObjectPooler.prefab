@@ -62,5 +62,5 @@ MonoBehaviour:
   GumDropParent: {fileID: 0}
   TouchParticleParent: {fileID: 0}
   DefaultSpawnTimer: 1
-  MainMenuSpawnTimer: 1
+  MainMenuSpawnTimer: 0.7
   MainGameSpawnTimer: 1
