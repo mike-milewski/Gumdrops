@@ -91,6 +91,8 @@ public class TargetColor : MonoBehaviour
 
             ColorFrame.fillAmount = TimeToChangeColor / DefaultTimeToChangeColor;
 
+            ChangeColorFrame();
+
             if(TimeToChangeColor <= 3 && !AboutToSwitchColor)
             {
                 AboutToSwitchColor = true;
@@ -128,6 +130,11 @@ public class TargetColor : MonoBehaviour
         ColorIndex = Random.Range(0, color.Length);
 
         TargetImage.sprite = GumDropColors[ColorIndex];
+    }
+
+    private void ChangeColorFrame()
+    {
+        ColorFrame.color = Color.Lerp(Color.red, Color.yellow, TimeToChangeColor / DefaultTimeToChangeColor);
     }
 
     public void SetTimer()
