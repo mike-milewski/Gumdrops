@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private TargetColor targetColor;
 
     [SerializeField]
-    private TextMeshProUGUI TimerText, TargetScoreText;
+    private TextMeshProUGUI TimerText, TargetScoreText, LevelText;
 
     [SerializeField]
     private GameObject GameOverMenu;
@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private float StartTimer;
+
+    private int Level;
 
     private float TargetScore;
 
@@ -65,6 +67,8 @@ public class GameManager : MonoBehaviour
 
         TargetScoreText.text = TargetScore.ToString();
 
+        UpdateLevel();
+
         IncreaseGumDropAndPowerUpSpeed();
     }
 
@@ -87,6 +91,8 @@ public class GameManager : MonoBehaviour
         targetColor.SetStartingTimeAndColor();
 
         TargetScoreText.text = TargetScore.ToString();
+
+        SetLevelText();
     }
 
     public void ResetGumDrops()
@@ -124,23 +130,14 @@ public class GameManager : MonoBehaviour
     private void IncreaseGumDropAndPowerUpSpeed()
     {
         var gumDrops = FindObjectsOfType<Gumdrop>(true);
-        var powerUpMovement = FindObjectsOfType<PowerUpMovement>(true);
 
         foreach (Gumdrop gd in gumDrops)
         {
             if(gd.GetMoveSpeed < MaxSpeed)
             {
                 gd.GetMoveSpeed += GumDropMoveSpeedIncrement;
+                gd.GetIncrementalMoveSpeed += GumDropMoveSpeedIncrement;
                 gd.GetMoveSpeed = Mathf.Clamp(gd.GetMoveSpeed, 0, MaxSpeed);
-                gd.GetIncrementalMoveSpeed = gd.GetMoveSpeed;
-            }
-        }
-        foreach (PowerUpMovement pum in powerUpMovement)
-        {
-            if(pum.GetMoveSpeed < MaxSpeed)
-            {
-                pum.GetMoveSpeed += GumDropMoveSpeedIncrement;
-                pum.GetMoveSpeed = Mathf.Clamp(pum.GetMoveSpeed, 0, MaxSpeed);
             }
         }
     }
@@ -148,16 +145,11 @@ public class GameManager : MonoBehaviour
     public void ResetGumDropAndPowerUpSpeed()
     {
         var gumDrops = FindObjectsOfType<Gumdrop>(true);
-        var powerUpMovement = FindObjectsOfType<PowerUpMovement>(true);
 
         foreach (Gumdrop gd in gumDrops)
         {
             gd.GetMoveSpeed = gd.GetDefaultMoveSpeed;
             gd.GetIncrementalMoveSpeed = gd.GetMoveSpeed;
-        }
-        foreach (PowerUpMovement pum in powerUpMovement)
-        {
-            pum.GetMoveSpeed = pum.GetDefaultMoveSpeed;
         }
     }
 
@@ -172,6 +164,20 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("HighScore", Highscorechecker.GetHighScore);
             PlayerPrefs.Save();
         }
+    }
+
+    private void SetLevelText()
+    {
+        Level = 1;
+
+        LevelText.text = "<u> Level </u> \n" + Level;
+    }
+
+    private void UpdateLevel()
+    {
+        Level++;
+
+        LevelText.text = "<u> Level </u> \n" + Level;
     }
 
     public void ToggleMenuButton(Button MenuButton)

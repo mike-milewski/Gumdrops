@@ -108,12 +108,11 @@ public class TargetColor : MonoBehaviour
 
     private void RandomColorIndex()
     {
-        RandomIndex = Random.Range(0, color.Length);
+        var gumDrops = FindObjectsOfType<Gumdrop>(false);
 
-        if(RandomIndex == ColorIndex)
-        {
-            RandomIndex = Random.Range(0, color.Length);
-        }
+        int Rand = Random.Range(0, gumDrops.Length);
+
+        RandomIndex = gumDrops[Rand].GetColorIndex;
 
         NextColorImage.sprite = GumDropColors[RandomIndex];
     }
