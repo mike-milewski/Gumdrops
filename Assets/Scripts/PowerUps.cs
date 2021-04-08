@@ -186,7 +186,7 @@ public class PowerUps : MonoBehaviour
             gd.GetSpriteRenderer.sprite = targetColor.GetTargetImage.sprite;
             gd.GetColorIndex = targetColor.GetColorIndex;
         }
-        targetColor.GetNextColorImage.sprite = null;
+        targetColor.GetNextColorImage.GetComponent<Animator>().SetBool("SetAnimation", false);
     }
 
     private void LoseDoublePointsPower()
@@ -217,7 +217,6 @@ public class PowerUps : MonoBehaviour
         var targetColor = FindObjectOfType<TargetColor>();
 
         targetColor.GetStaticColor = false;
-        targetColor.SetTimer();
 
         foreach (Gumdrop gd in gumDrop)
         {

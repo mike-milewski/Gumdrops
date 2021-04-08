@@ -8,6 +8,9 @@ public class Gumdrop : MonoBehaviour
     private float MainMenuMoveSpeed, GameMoveSpeed, RotationSpeed, MoveSpeed, DefaultMoveSpeed, IncrementalMoveSpeed;
 
     [SerializeField]
+    private Animator animator;
+
+    [SerializeField]
     private SpriteRenderer spriteRenderer;
 
     [SerializeField]
@@ -22,6 +25,8 @@ public class Gumdrop : MonoBehaviour
     private Color color;
 
     private int DefaultScore, ColorIndex;
+
+    private bool StoppedGumDrop;
 
     private ObjectPooler objectPooler;
 
@@ -74,6 +79,18 @@ public class Gumdrop : MonoBehaviour
         set
         {
             spriteRenderer = value;
+        }
+    }
+
+    public Animator GetAnimator
+    {
+        get
+        {
+            return animator;
+        }
+        set
+        {
+            animator = value;
         }
     }
 
@@ -185,16 +202,34 @@ public class Gumdrop : MonoBehaviour
         }
     }
 
+    public bool GetStoppedGumDrop
+    {
+        get
+        {
+            return StoppedGumDrop;
+        }
+        set
+        {
+            StoppedGumDrop = value;
+        }
+    }
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        animator = GetComponent<Animator>();
 
         DefaultScore = ScoreValue;
     }
 
     private void OnEnable()
     {
-        if(targetColor != null)
+        animator.SetBool("SetAnimation", false);
+
+        StoppedGumDrop = false;
+
+        if (targetColor != null)
         {
             if(targetColor.GetStaticColor)
             {
@@ -213,9 +248,12 @@ public class Gumdrop : MonoBehaviour
 
     private void Update()
     {
-        transform.position += -Vector3.up * MoveSpeed * Time.deltaTime;
+        if(!StoppedGumDrop)
+        {
+            transform.position += -Vector3.up * MoveSpeed * Time.deltaTime;
 
-        transform.Rotate(0, 0, RotationSpeed * Time.deltaTime);
+            transform.Rotate(0, 0, RotationSpeed * Time.deltaTime);
+        }
     }
 
     public void ChooseColor()
@@ -235,6 +273,12 @@ public class Gumdrop : MonoBehaviour
         {
             SubtractGumDropScore();
         }
+    }
+
+    public void StopGumDrop()
+    {
+        MoveSpeed = 0;
+        RotationSpeed = 0;
     }
 
     public void AddGumDropScore()

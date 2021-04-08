@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                GameOverMenu.SetActive(true);
+                GameOverMenu.GetComponent<Animator>().SetBool("OpenMenu", true);
                 ToggleMenuButton(menuButton);
                 Time.timeScale = 0;
             }
@@ -185,13 +185,15 @@ public class GameManager : MonoBehaviour
         MenuButton.interactable = false;
     }
 
-    public void OpenMenu()
+    public void OpenMenu(Animator animator)
     {
+        animator.SetBool("OpenMenu", true);
         Time.timeScale = 0;
     }
 
-    public void CloseMenu()
+    public void CloseMenu(Animator animator)
     {
         Time.timeScale = 1;
+        animator.SetBool("OpenMenu", false);
     }
 }

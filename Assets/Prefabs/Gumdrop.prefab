@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2682672891622776847}
   - component: {fileID: 2682672891622776840}
   - component: {fileID: 2682672891622776844}
+  - component: {fileID: 980605412}
   m_Layer: 6
   m_Name: Gumdrop
   m_TagString: Player
@@ -155,6 +156,7 @@ MonoBehaviour:
   MoveSpeed: 0
   DefaultMoveSpeed: 0
   IncrementalMoveSpeed: 0
+  animator: {fileID: 980605412}
   spriteRenderer: {fileID: 2682672891622776846}
   GumDropColors:
   - {fileID: 21300000, guid: d0b21f368a45f91479cd9a4c94975afd, type: 3}
@@ -163,3 +165,22 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b0d80db906b5da44d9054a959d01b15b, type: 3}
   colors: 00000000010000000200000003000000
   ScoreValue: 10
+--- !u!95 &980605412
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2682672891622776841}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c781d85829ae2a048a047a921028c962, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

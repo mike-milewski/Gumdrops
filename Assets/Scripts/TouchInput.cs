@@ -37,7 +37,9 @@ public class TouchInput : MonoBehaviour
                 {
                     hit.collider.GetComponent<Gumdrop>().CheckColor();
 
-                    ObjectPooler.Instance.ReturnGumDropToPool(hit.collider.GetComponent<Gumdrop>().gameObject);
+                    hit.collider.GetComponent<Gumdrop>().GetStoppedGumDrop = true;
+
+                    hit.collider.GetComponent<Gumdrop>().GetAnimator.SetBool("SetAnimation", true);
                 }
                 else if(hit && hit.collider.GetComponent<PowerUps>() && !EventSystem.current.IsPointerOverGameObject(0) && Time.timeScale > 0)
                 {

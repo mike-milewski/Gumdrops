@@ -100,9 +100,9 @@ public class TargetColor : MonoBehaviour
             }
             if (TimeToChangeColor <= 0)
             {
-                ChooseColor();
+                PlayTargetImageAnimation();
                 AboutToSwitchColor = false;
-                NextColorImage.sprite = null;
+                NextColorImage.GetComponent<Animator>().SetBool("SetAnimation", false);
                 TimeToChangeColor = DefaultTimeToChangeColor;
             }
         }
@@ -117,10 +117,18 @@ public class TargetColor : MonoBehaviour
         RandomIndex = gumDrops[Rand].GetColorIndex;
 
         NextColorImage.sprite = GumDropColors[RandomIndex];
+
+        NextColorImage.GetComponent<Animator>().SetBool("SetAnimation", true);
     }
 
-    private void ChooseColor()
+    private void PlayTargetImageAnimation()
     {
+        TargetImage.GetComponent<Animator>().SetBool("SetAnimation", true);
+    }
+
+    public void ChooseColor()
+    {
+        TargetImage.GetComponent<Animator>().SetBool("SetAnimation", false);
         TargetImage.sprite = GumDropColors[RandomIndex];
         ColorIndex = RandomIndex;
     }
