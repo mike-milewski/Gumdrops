@@ -170,14 +170,14 @@ public class GameManager : MonoBehaviour
     {
         Level = 1;
 
-        LevelText.text = "<u> Level </u> \n" + Level;
+        LevelText.text = "<u>Level</u> \n" + Level;
     }
 
     private void UpdateLevel()
     {
         Level++;
 
-        LevelText.text = "<u> Level </u> \n" + Level;
+        LevelText.text = "<u>Level</u> \n" + Level;
     }
 
     public void ToggleMenuButton(Button MenuButton)

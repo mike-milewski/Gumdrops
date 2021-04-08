@@ -105,9 +105,11 @@ public class PowerUpManager : MonoBehaviour
             TempPowerUpIndex = powerUp.GetPowerUpIndex;
             pus.GetPowerUpIndex = TempPowerUpIndex;
 
-            pus.transform.SetParent(PowerUpSymbolParent);
+            pus.transform.SetParent(PowerUpSymbolParent, true);
 
-            pus.GetComponent<Image>().sprite = powerUp.GetComponent<SpriteRenderer>().sprite;
+            pus.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
+
+            pus.GetPowerUpImage.sprite = powerUp.GetComponent<SpriteRenderer>().sprite;
         }
     }
 

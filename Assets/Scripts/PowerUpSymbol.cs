@@ -6,7 +6,12 @@ public class PowerUpSymbol : MonoBehaviour
     private PowerUps powerUp;
 
     [SerializeField]
+    private Image PowerUpImage, PowerUpImageFill;
+
+    [SerializeField]
     private float PowerUpTime;
+
+    private float DefaultPowerUpTime;
 
     private int PowerUpIndex;
 
@@ -19,6 +24,18 @@ public class PowerUpSymbol : MonoBehaviour
         set
         {
             powerUp = value;
+        }
+    }
+
+    public Image GetPowerUpImage
+    {
+        get
+        {
+            return PowerUpImage;
+        }
+        set
+        {
+            PowerUpImage = value;
         }
     }
 
@@ -49,6 +66,8 @@ public class PowerUpSymbol : MonoBehaviour
     private void OnEnable()
     {
         FindPowerUpManager();
+
+        DefaultPowerUpTime = PowerUpTime;
     }
 
     private void FindPowerUpManager()
@@ -61,6 +80,7 @@ public class PowerUpSymbol : MonoBehaviour
     private void Update()
     {
         PowerUpTime -= Time.deltaTime;
+        PowerUpImageFill.fillAmount = PowerUpTime / DefaultPowerUpTime;
         if(PowerUpTime <= 0)
         {
             EndPowerUp();
