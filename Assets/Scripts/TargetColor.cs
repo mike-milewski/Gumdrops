@@ -9,6 +9,9 @@ public class TargetColor : MonoBehaviour
     private ColorList[] color;
 
     [SerializeField]
+    private Gradient gradient;
+
+    [SerializeField]
     private Image TargetImage, NextColorImage, ColorFrame;
 
     [SerializeField]
@@ -140,9 +143,14 @@ public class TargetColor : MonoBehaviour
         TargetImage.sprite = GumDropColors[ColorIndex];
     }
 
+    private Color ColorFromGradient(float value)  // float between 0-1
+    {
+        return gradient.Evaluate(value);
+    }
+
     private void ChangeColorFrame()
     {
-        ColorFrame.color = Color.Lerp(Color.red, Color.yellow, TimeToChangeColor / DefaultTimeToChangeColor);
+        ColorFrame.color = ColorFromGradient(TimeToChangeColor / DefaultTimeToChangeColor);
     }
 
     public void SetTimer()

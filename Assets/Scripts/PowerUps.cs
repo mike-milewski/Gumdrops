@@ -10,6 +10,9 @@ public class PowerUps : MonoBehaviour
     private ObjectPooler objectPooler;
 
     [SerializeField]
+    private GameObject SlowPowerParticle, DoublePointsParticle, SameColorParticle;
+
+    [SerializeField]
     private Sprite DoublePointsSprite, SlowSprite, SameColorSprite;
 
     [SerializeField]
@@ -88,12 +91,21 @@ public class PowerUps : MonoBehaviour
         {
             case (Powers.DoublePoints):
                 GetComponent<SpriteRenderer>().sprite = DoublePointsSprite;
+                DoublePointsParticle.SetActive(true);
+                SlowPowerParticle.SetActive(false);
+                SameColorParticle.SetActive(false);
                 break;
             case (Powers.Slow):
                 GetComponent<SpriteRenderer>().sprite = SlowSprite;
+                DoublePointsParticle.SetActive(false);
+                SlowPowerParticle.SetActive(true);
+                SameColorParticle.SetActive(false);
                 break;
             case (Powers.SameColor):
                 GetComponent<SpriteRenderer>().sprite = SameColorSprite;
+                DoublePointsParticle.SetActive(false);
+                SlowPowerParticle.SetActive(false);
+                SameColorParticle.SetActive(true);
                 break;
         }
     }
@@ -186,7 +198,6 @@ public class PowerUps : MonoBehaviour
             gd.GetSpriteRenderer.sprite = targetColor.GetTargetImage.sprite;
             gd.GetColorIndex = targetColor.GetColorIndex;
         }
-        targetColor.GetNextColorImage.GetComponent<Animator>().SetBool("SetAnimation", false);
     }
 
     private void LoseDoublePointsPower()

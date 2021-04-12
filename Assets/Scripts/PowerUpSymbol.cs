@@ -9,6 +9,9 @@ public class PowerUpSymbol : MonoBehaviour
     private Image PowerUpImage, PowerUpImageFill;
 
     [SerializeField]
+    private Gradient gradient;
+
+    [SerializeField]
     private float PowerUpTime;
 
     private float DefaultPowerUpTime;
@@ -80,11 +83,25 @@ public class PowerUpSymbol : MonoBehaviour
     private void Update()
     {
         PowerUpTime -= Time.deltaTime;
+
         PowerUpImageFill.fillAmount = PowerUpTime / DefaultPowerUpTime;
+
+        ChangePowerUpFrameColor();
+
         if(PowerUpTime <= 0)
         {
             EndPowerUp();
         }
+    }
+
+    private Color ColorFromGradient(float value)  // float between 0-1
+    {
+        return gradient.Evaluate(value);
+    }
+
+    private void ChangePowerUpFrameColor()
+    {
+        PowerUpImageFill.color = ColorFromGradient(PowerUpTime / DefaultPowerUpTime);
     }
 
     private void EndPowerUp()

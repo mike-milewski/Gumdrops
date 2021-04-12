@@ -33,6 +33,11 @@ public class ScoreManager : MonoBehaviour
         {
             Score = 0;
         }
+        else
+        {
+            ScoreText.GetComponent<Animator>().enabled = true;
+            ScoreText.GetComponent<Animator>().Play("Score", -1, 0f);
+        }
 
         ScoreText.text = Mathf.Max(0, Score).ToString();
 

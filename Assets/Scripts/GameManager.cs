@@ -34,6 +34,9 @@ public class GameManager : MonoBehaviour
 
     private float Timer;
 
+    [SerializeField]
+    private bool GameOverMenuOpened;
+
     private void OnEnable()
     {
         PlayerPrefs.DeleteKey("HighScore");
@@ -54,10 +57,21 @@ public class GameManager : MonoBehaviour
             else
             {
                 GameOverMenu.GetComponent<Animator>().SetBool("OpenMenu", true);
-                ToggleMenuButton(menuButton);
+                
+                if (!GameOverMenuOpened)
+                {
+                    ToggleMenuButton(menuButton);
+                    GameOverMenuOpened = true;
+                }
+
                 Time.timeScale = 0;
             }
         }
+    }
+
+    public void ResetGameOverMenuOpened()
+    {
+        GameOverMenuOpened = false;
     }
 
     private void NextLevel()
@@ -68,6 +82,9 @@ public class GameManager : MonoBehaviour
         TargetScoreText.text = TargetScore.ToString();
 
         UpdateLevel();
+
+        TargetScoreText.GetComponent<Animator>().enabled = true;
+        TargetScoreText.GetComponent<Animator>().Play("Score", -1, 0f);
 
         IncreaseGumDropAndPowerUpSpeed();
     }
@@ -93,6 +110,9 @@ public class GameManager : MonoBehaviour
         TargetScoreText.text = TargetScore.ToString();
 
         SetLevelText();
+
+        GameOverMenuOpened = false;
+        menuButton.interactable = true;
     }
 
     public void ResetGumDrops()
