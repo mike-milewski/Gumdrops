@@ -1,11 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Gumdrop : MonoBehaviour
 {
     [SerializeField]
     private float MainMenuMoveSpeed, GameMoveSpeed, RotationSpeed, MoveSpeed, DefaultMoveSpeed, IncrementalMoveSpeed;
+
+    [SerializeField]
+    private int ScoreValue;
 
     [SerializeField]
     private Animator animator;
@@ -14,15 +18,22 @@ public class Gumdrop : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     [SerializeField]
+    private ParticleSystem ParticleEffect;
+
+    [SerializeField]
+    private BoxCollider2D boxCollider2D;
+
+    [SerializeField]
+    private AudioSource source;
+
+    [SerializeField]
     private Sprite[] GumDropColors;
 
     [SerializeField]
     private ColorList[] colors;
 
     [SerializeField]
-    private int ScoreValue;
-
-    private Color color;
+    private Color[] color;
 
     private int DefaultScore, ColorIndex;
 
@@ -220,12 +231,24 @@ public class Gumdrop : MonoBehaviour
 
         animator = GetComponent<Animator>();
 
+        ParticleEffect.GetComponent<ParticleSystem>();
+
+        boxCollider2D.GetComponent<BoxCollider2D>();
+
+        source.GetComponent<AudioSource>();
+
         DefaultScore = ScoreValue;
     }
 
     private void OnEnable()
     {
         animator.SetBool("SetAnimation", false);
+
+        spriteRenderer.enabled = true;
+
+        ParticleEffect.gameObject.SetActive(false);
+
+        boxCollider2D.enabled = true;
 
         StoppedGumDrop = false;
 
@@ -291,8 +314,29 @@ public class Gumdrop : MonoBehaviour
         scoreManager.ScorePoints(-ScoreValue);
     }
 
-    public void ReturnGumDropBackToQueue()
+    public void PlayParticle()
+    {
+        ParticleEffect.gameObject.SetActive(true);
+
+        var ps = ParticleEffect.main;
+
+        ps.startColor = color[ColorIndex];
+
+        spriteRenderer.enabled = false;
+
+        source.Play();
+
+        StartCoroutine("WaitToReturnToQueue");
+    }
+
+    private void ReturnGumDropBackToQueue()
     {
         objectPooler.ReturnGumDropToPool(gameObject);
+    }
+
+    private IEnumerator WaitToReturnToQueue()
+    {
+        yield return new WaitForSeconds(1);
+        ReturnGumDropBackToQueue();
     }
 }

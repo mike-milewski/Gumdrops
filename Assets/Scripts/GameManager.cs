@@ -216,4 +216,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         animator.SetBool("OpenMenu", false);
     }
+
+    public void ResetNextTargetIageAnimation()
+    {
+        targetColor.GetNextColorImage.GetComponent<Animator>().SetBool("SetAnimation", false);
+        targetColor.GetAboutToSwitchColor = false;
+    }
 }

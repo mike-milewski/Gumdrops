@@ -86,6 +86,18 @@ public class TargetColor : MonoBehaviour
         }
     } 
 
+    public bool GetAboutToSwitchColor
+    {
+        get
+        {
+            return AboutToSwitchColor;
+        }
+        set
+        {
+            AboutToSwitchColor = value;
+        }
+    }
+
     private void Update()
     {
         if(!StaticColor)
@@ -116,7 +128,7 @@ public class TargetColor : MonoBehaviour
         var gumDrops = FindObjectsOfType<Gumdrop>(false);
 
         int Rand = Random.Range(0, gumDrops.Length);
-
+        
         RandomIndex = gumDrops[Rand].GetColorIndex;
 
         NextColorImage.sprite = GumDropColors[RandomIndex];
