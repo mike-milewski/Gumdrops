@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Button menuButton;
 
+    private Color TimerTextColor;
+
     [SerializeField]
     private int DefaultTargetScore, ScoreIncrement, GumDropMoveSpeedIncrement, MaxSpeed;
 
@@ -41,6 +43,8 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.DeleteKey("HighScore");
 
+        TimerTextColor = TimerText.color;
+
         StartGame();
     }
 
@@ -48,6 +52,7 @@ public class GameManager : MonoBehaviour
     {
         Timer -= Time.deltaTime;
         TimerText.text = Mathf.Clamp(Timer, 0, Timer).ToString("F0");
+        CheckTimer();
         if(Timer <= 0)
         {
             if(scoreManager.GetScore >= TargetScore)
@@ -69,6 +74,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void CheckTimer()
+    {
+        if(Timer < 10)
+        {
+            TimerText.color = Color.red;
+            TimerText.GetComponent<Animator>().SetBool("Timer", true);
+        }
+    }
+
     public void ResetGameOverMenuOpened()
     {
         GameOverMenuOpened = false;
@@ -86,6 +100,10 @@ public class GameManager : MonoBehaviour
         TargetScoreText.GetComponent<Animator>().enabled = true;
         TargetScoreText.GetComponent<Animator>().Play("Score", -1, 0f);
 
+        TimerText.GetComponent<Animator>().SetBool("Timer", false);
+
+        TimerText.color = TimerTextColor;
+
         IncreaseGumDropAndPowerUpSpeed();
     }
 
@@ -98,6 +116,10 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         Timer = StartTimer;
+
+        TimerText.GetComponent<Animator>().SetBool("Timer", false);
+
+        TimerText.color = TimerTextColor;
 
         TargetScore = DefaultTargetScore;
 
