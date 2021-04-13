@@ -10,6 +10,6 @@ public class VolumeFade : MonoBehaviour
 
     private void Update()
     {
-        audioSource.volume -= FadeSpeed * Time.deltaTime;
+        audioSource.volume -= FadeSpeed * Time.unscaledDeltaTime;
     }
 }

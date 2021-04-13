@@ -5,6 +5,9 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private AudioSource audioSource;
 
+    [SerializeField]
+    private AudioClip clip;
+
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -24,6 +27,12 @@ public class SoundManager : MonoBehaviour
     {
         audioSource.clip = audioClip;
 
+        audioSource.Play();
+    }
+
+    public void PlayNextLevelClip()
+    {
+        audioSource.clip = clip;
         audioSource.Play();
     }
 }

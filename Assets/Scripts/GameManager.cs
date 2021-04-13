@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private TargetColor targetColor;
+
+    [SerializeField]
+    private SoundManager soundManager;
 
     [SerializeField]
     private TextMeshProUGUI TimerText, TargetScoreText, LevelText;
@@ -36,6 +40,8 @@ public class GameManager : MonoBehaviour
 
     private float Timer;
 
+    private bool StartedGame;
+
     [SerializeField]
     private bool GameOverMenuOpened;
 
@@ -45,12 +51,19 @@ public class GameManager : MonoBehaviour
 
         TimerTextColor = TimerText.color;
 
+        targetColor.SetStartingTimeAndColor();
+
         StartGame();
+
+        StartCoroutine("WaitToStartTimer");
     }
 
     private void Update()
     {
-        Timer -= Time.deltaTime;
+        if(StartedGame)
+        {
+            Timer -= Time.deltaTime;
+        }
         TimerText.text = Mathf.Clamp(Timer, 0, Timer).ToString("F0");
         CheckTimer();
         if(Timer <= 0)
@@ -62,10 +75,11 @@ public class GameManager : MonoBehaviour
             else
             {
                 GameOverMenu.GetComponent<Animator>().SetBool("OpenMenu", true);
-                
+
                 if (!GameOverMenuOpened)
                 {
                     ToggleMenuButton(menuButton);
+                    GetComponent<AudioSource>().Play();
                     GameOverMenuOpened = true;
                 }
 
@@ -104,6 +118,8 @@ public class GameManager : MonoBehaviour
 
         TimerText.color = TimerTextColor;
 
+        targetColor.ReduceTimer();
+
         IncreaseGumDropAndPowerUpSpeed();
     }
 
@@ -126,8 +142,6 @@ public class GameManager : MonoBehaviour
         scoreManager.GetScore = 0;
 
         scoreManager.UpdateScoreText();
-
-        targetColor.SetStartingTimeAndColor();
 
         TargetScoreText.text = TargetScore.ToString();
 
@@ -179,7 +193,9 @@ public class GameManager : MonoBehaviour
             {
                 gd.GetMoveSpeed += GumDropMoveSpeedIncrement;
                 gd.GetIncrementalMoveSpeed += GumDropMoveSpeedIncrement;
+
                 gd.GetMoveSpeed = Mathf.Clamp(gd.GetMoveSpeed, 0, MaxSpeed);
+                gd.GetIncrementalMoveSpeed = Mathf.Clamp(gd.GetIncrementalMoveSpeed, 0, MaxSpeed);
             }
         }
     }
@@ -220,6 +236,8 @@ public class GameManager : MonoBehaviour
         Level++;
 
         LevelText.text = "<u>Level</u> \n" + Level;
+
+        soundManager.PlayNextLevelClip();
     }
 
     public void ToggleMenuButton(Button MenuButton)
@@ -243,5 +261,11 @@ public class GameManager : MonoBehaviour
     {
         targetColor.GetNextColorImage.GetComponent<Animator>().SetBool("SetAnimation", false);
         targetColor.GetAboutToSwitchColor = false;
+    }
+
+    private IEnumerator WaitToStartTimer()
+    {
+        yield return new WaitForSeconds(1);
+        StartedGame = true;
     }
 }

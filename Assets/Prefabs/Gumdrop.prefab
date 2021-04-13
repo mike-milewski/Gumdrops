@@ -5135,8 +5135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51b96458b83f284aa29a548b7883832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainMenuMoveSpeed: 300
-  GameMoveSpeed: 200
+  MainMenuMoveSpeed: 350
+  GameMoveSpeed: 230
   RotationSpeed: 60
   MoveSpeed: 0
   DefaultMoveSpeed: 0

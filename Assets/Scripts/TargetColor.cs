@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,13 +20,22 @@ public class TargetColor : MonoBehaviour
     private Sprite[] GumDropColors;
 
     [SerializeField]
-    private float DefaultTimeToChangeColor;
+    private AudioSource audioSource;
 
-    private float TimeToChangeColor;
+    [SerializeField]
+    private float DefaultTimeToChangeColor, MinimumTimeToChangeColor;
+
+    [SerializeField]
+    private bool StaticColor;
+
+    [SerializeField]
+    private List<Gumdrop> gumDrops;
+
+    private float TimeToChangeColor, CurrentTimeToChangeColor;
 
     private int ColorIndex, RandomIndex;
 
-    private bool StaticColor, AboutToSwitchColor;
+    private bool AboutToSwitchColor;
 
     public Image GetTargetImage
     {
@@ -98,13 +109,18 @@ public class TargetColor : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        StartCoroutine("WaitToStartGame");
+    }
+
     private void Update()
     {
         if(!StaticColor)
         {
             TimeToChangeColor -= Time.deltaTime;
 
-            ColorFrame.fillAmount = TimeToChangeColor / DefaultTimeToChangeColor;
+            ColorFrame.fillAmount = TimeToChangeColor / CurrentTimeToChangeColor;
 
             ChangeColorFrame();
 
@@ -118,22 +134,37 @@ public class TargetColor : MonoBehaviour
                 PlayTargetImageAnimation();
                 AboutToSwitchColor = false;
                 NextColorImage.GetComponent<Animator>().SetBool("SetAnimation", false);
-                TimeToChangeColor = DefaultTimeToChangeColor;
+                TimeToChangeColor = CurrentTimeToChangeColor;
             }
         }
     }
 
     private void RandomColorIndex()
     {
-        var gumDrops = FindObjectsOfType<Gumdrop>(false);
+        var gd = FindObjectsOfType<Gumdrop>(false);
 
-        int Rand = Random.Range(0, gumDrops.Length);
-        
+        foreach(Gumdrop gumdrop in gd)
+        {
+            gumDrops.Add(gumdrop);
+        }
+
+        for(int i = 0; i < gd.Length; i++)
+        {
+            if(gd[i].GetColorIndex == ColorIndex)
+            {
+                gumDrops.Remove(gd[i]);
+            }
+        }
+
+        int Rand = Random.Range(0, gumDrops.Count);
+
         RandomIndex = gumDrops[Rand].GetColorIndex;
 
         NextColorImage.sprite = GumDropColors[RandomIndex];
 
         NextColorImage.GetComponent<Animator>().SetBool("SetAnimation", true);
+
+        gumDrops.Clear();
     }
 
     private void PlayTargetImageAnimation()
@@ -155,25 +186,43 @@ public class TargetColor : MonoBehaviour
         TargetImage.sprite = GumDropColors[ColorIndex];
     }
 
-    private Color ColorFromGradient(float value)  // float between 0-1
+    private Color ColorFromGradient(float value)
     {
         return gradient.Evaluate(value);
     }
 
     private void ChangeColorFrame()
     {
-        ColorFrame.color = ColorFromGradient(TimeToChangeColor / DefaultTimeToChangeColor);
-    }
-
-    public void SetTimer()
-    {
-        TimeToChangeColor = DefaultTimeToChangeColor;
+        ColorFrame.color = ColorFromGradient(TimeToChangeColor / CurrentTimeToChangeColor);
     }
 
     public void SetStartingTimeAndColor()
     {
         TimeToChangeColor = DefaultTimeToChangeColor;
+        CurrentTimeToChangeColor = DefaultTimeToChangeColor;
 
         ChooseRandomColorFromStart();
+    }
+
+    public void ReduceTimer()
+    {
+        if(CurrentTimeToChangeColor > MinimumTimeToChangeColor)
+        {
+            CurrentTimeToChangeColor -= 1;
+        }
+        TimeToChangeColor = CurrentTimeToChangeColor;
+    }
+
+    private IEnumerator WaitToStartGame()
+    {
+        yield return new WaitForSeconds(1f);
+        TargetImage.GetComponent<Animator>().SetTrigger("SetFirstAnimation");
+        SetStartingTimeAndColor();
+        StaticColor = false;
+    }
+
+    public void PlayAudioSource()
+    {
+        audioSource.Play();
     }
 }
