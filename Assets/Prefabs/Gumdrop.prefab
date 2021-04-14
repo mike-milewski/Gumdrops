@@ -5136,7 +5136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainMenuMoveSpeed: 350
-  GameMoveSpeed: 230
+  GameMoveSpeed: 250
   RotationSpeed: 60
   MoveSpeed: 0
   DefaultMoveSpeed: 0

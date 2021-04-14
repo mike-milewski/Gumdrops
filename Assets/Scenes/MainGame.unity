@@ -412,6 +412,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TouchParticle
       objectReference: {fileID: 0}
+    - target: {fileID: 1176168246839325689, guid: 1e4daa07e738f6c47b92274ff61a7e6c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1176168246839325692, guid: 1e4daa07e738f6c47b92274ff61a7e6c, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -16173,7 +16177,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 2080096475}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ResetNextTargetIageAnimation
+        m_MethodName: ResetNextTargetImageAnimation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16190,6 +16194,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 8300000, guid: ff11b61a29b9e0240a02473389cb6233, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 913647110}
+        m_TargetAssemblyTypeName: TargetColor, Assembly-CSharp
+        m_MethodName: SetStartingTimeAndColor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -16975,6 +16991,7 @@ MonoBehaviour:
   MinimumTimeToChangeColor: 5
   StaticColor: 1
   gumDrops: []
+  AboutToSwitchColor: 0
 --- !u!95 &913647111
 Animator:
   serializedVersion: 3
@@ -29040,7 +29057,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3578594078837910392, guid: 71bc94d7b3930404e8a17db1d64092c3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3578594078837910395, guid: 71bc94d7b3930404e8a17db1d64092c3, type: 3}
       propertyPath: m_Pivot.x
@@ -36120,7 +36137,7 @@ PrefabInstance:
       objectReference: {fileID: 1770496799}
     - target: {fileID: 3386047993023684154, guid: a3358cad50350b347a320e0044cb6c4a, type: 3}
       propertyPath: MainGameSpawnTimer
-      value: 1
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 3386047993023684154, guid: a3358cad50350b347a320e0044cb6c4a, type: 3}
       propertyPath: TouchParticleParent

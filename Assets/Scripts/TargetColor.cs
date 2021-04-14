@@ -35,6 +35,7 @@ public class TargetColor : MonoBehaviour
 
     private int ColorIndex, RandomIndex;
 
+    [SerializeField]
     private bool AboutToSwitchColor;
 
     public Image GetTargetImage
@@ -211,6 +212,9 @@ public class TargetColor : MonoBehaviour
             CurrentTimeToChangeColor -= 1;
         }
         TimeToChangeColor = CurrentTimeToChangeColor;
+        AboutToSwitchColor = false;
+        NextColorImage.GetComponent<Animator>().SetBool("SetAnimation", false);
+        gumDrops.Clear();
     }
 
     private IEnumerator WaitToStartGame()

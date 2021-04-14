@@ -257,10 +257,10 @@ public class GameManager : MonoBehaviour
         animator.SetBool("OpenMenu", false);
     }
 
-    public void ResetNextTargetIageAnimation()
+    public void ResetNextTargetImageAnimation()
     {
-        targetColor.GetNextColorImage.GetComponent<Animator>().SetBool("SetAnimation", false);
         targetColor.GetAboutToSwitchColor = false;
+        targetColor.GetNextColorImage.GetComponent<Animator>().SetBool("SetAnimation", false);
     }
 
     private IEnumerator WaitToStartTimer()
