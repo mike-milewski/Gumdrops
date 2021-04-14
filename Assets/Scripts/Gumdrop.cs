@@ -329,14 +329,9 @@ public class Gumdrop : MonoBehaviour
         StartCoroutine("WaitToReturnToQueue");
     }
 
-    private void ReturnGumDropBackToQueue()
-    {
-        objectPooler.ReturnGumDropToPool(gameObject);
-    }
-
     private IEnumerator WaitToReturnToQueue()
     {
         yield return new WaitForSeconds(1);
-        ReturnGumDropBackToQueue();
+        objectPooler.ReturnGumDropToPool(gameObject);
     }
 }

@@ -47,7 +47,15 @@ public class TouchInput : MonoBehaviour
                 {
                     hit.collider.GetComponent<PowerUps>().GetPower();
 
-                    ObjectPooler.Instance.ReturnPowerUpToPool(hit.collider.GetComponent<PowerUps>().gameObject);
+                    hit.collider.GetComponent<PowerUps>().GetCircleCollider2D.enabled = false;
+
+                    hit.collider.GetComponent<SpriteRenderer>().enabled = false;
+
+                    hit.collider.GetComponent<PowerUps>().GetAudioSource.Play();
+
+                    hit.collider.GetComponent<PowerUps>().GetPowerParticle.SetActive(false);
+
+                    StartCoroutine(hit.collider.GetComponent<PowerUps>().WaitToReturnToQueue());
                 }
                 else
                 {

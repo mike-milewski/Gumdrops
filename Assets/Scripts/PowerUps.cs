@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,11 +13,24 @@ public class PowerUps : MonoBehaviour
     [SerializeField]
     private GameObject SlowPowerParticle, DoublePointsParticle, SameColorParticle;
 
+    private GameObject PowerParticle;
+
     [SerializeField]
     private Sprite DoublePointsSprite, SlowSprite, SameColorSprite;
 
     [SerializeField]
+    private AudioClip DoublePowerClip, SlowPowerClip, SameColorClip;
+
+    private AudioClip SoundToPlay;
+
+    [SerializeField]
     private Powers[] powers;
+
+    private AudioSource audioSource;
+
+    private SpriteRenderer spriteRenderer;
+
+    private CircleCollider2D circleCollider2D;
 
     [SerializeField]
     private float PowerTime;
@@ -59,6 +73,54 @@ public class PowerUps : MonoBehaviour
         }
     }
 
+    public CircleCollider2D GetCircleCollider2D
+    {
+        get
+        {
+            return circleCollider2D;
+        }
+        set
+        {
+            circleCollider2D = value;
+        }
+    }
+
+    public AudioSource GetAudioSource
+    {
+        get
+        {
+            return audioSource;
+        }
+        set
+        {
+            audioSource = value;
+        }
+    }
+
+    public AudioClip GetSoundToPlay
+    {
+        get
+        {
+            return SoundToPlay;
+        }
+        set
+        {
+            SoundToPlay = value;
+        }
+    }
+
+    public GameObject GetPowerParticle
+    {
+        get
+        {
+            return PowerParticle;
+        }
+        set
+        {
+            PowerParticle = value;
+        }
+    }
+
     public float GetPowerTime
     {
         get
@@ -74,6 +136,9 @@ public class PowerUps : MonoBehaviour
     private void OnEnable()
     {
         ChoosePower();
+
+        spriteRenderer.enabled = true;
+        circleCollider2D.enabled = true;
     }
 
     private void Awake()
@@ -81,6 +146,10 @@ public class PowerUps : MonoBehaviour
         FindPowerUpManager();
 
         FindObjectPooler();
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        circleCollider2D = GetComponent<CircleCollider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void ChoosePower()
@@ -94,20 +163,27 @@ public class PowerUps : MonoBehaviour
                 DoublePointsParticle.SetActive(true);
                 SlowPowerParticle.SetActive(false);
                 SameColorParticle.SetActive(false);
+                SoundToPlay = DoublePowerClip;
+                PowerParticle = DoublePointsParticle;
                 break;
             case (Powers.Slow):
                 GetComponent<SpriteRenderer>().sprite = SlowSprite;
                 DoublePointsParticle.SetActive(false);
                 SlowPowerParticle.SetActive(true);
                 SameColorParticle.SetActive(false);
+                SoundToPlay = SlowPowerClip;
+                PowerParticle = SlowPowerParticle;
                 break;
             case (Powers.SameColor):
                 GetComponent<SpriteRenderer>().sprite = SameColorSprite;
                 DoublePointsParticle.SetActive(false);
                 SlowPowerParticle.SetActive(false);
                 SameColorParticle.SetActive(true);
+                SoundToPlay = SameColorClip;
+                PowerParticle = SameColorParticle;
                 break;
         }
+        audioSource.clip = SoundToPlay;
     }
 
     private void FindPowerUpManager()
@@ -233,5 +309,11 @@ public class PowerUps : MonoBehaviour
         {
             gd.ChooseColor();
         }
+    }
+
+    public IEnumerator WaitToReturnToQueue()
+    {
+        yield return new WaitForSeconds(1f);
+        objectPooler.ReturnPowerUpToPool(gameObject);
     }
 }
