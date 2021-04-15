@@ -133,9 +133,10 @@ public class ObjectPooler : MonoBehaviour
     private Transform GumDropParent, TouchParticleParent;
 
     [SerializeField]
-    private float DefaultSpawnTimer, MainMenuSpawnTimer, MainGameSpawnTimer;
+    private float DefaultSpawnTimer, MainMenuSpawnTimer, MainGameSpawnTimer, MinimumSpawnTimer;
 
-    private float SpawnTimer;
+    [SerializeField]
+    private float SpawnTimer, CurrentSpawnTimer;
 
     public Boundary GetBoundary
     {
@@ -146,6 +147,18 @@ public class ObjectPooler : MonoBehaviour
         set
         {
             boundary = value;
+        }
+    }
+
+    public float GetSpawnTimer
+    {
+        get
+        {
+            return SpawnTimer;
+        }
+        set
+        {
+            SpawnTimer = value;
         }
     }
 
@@ -161,15 +174,27 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
-    public float GetDefaultSpawnTimer
+    public float GetCurrentSpawnTimer
     {
         get
         {
-            return DefaultSpawnTimer;
+            return CurrentSpawnTimer;
         }
         set
         {
-            DefaultSpawnTimer = value;
+            CurrentSpawnTimer = value;
+        }
+    }
+
+    public float GetMinimumSpawnTimer
+    {
+        get
+        {
+            return MinimumSpawnTimer;
+        }
+        set
+        {
+            MinimumSpawnTimer = value;
         }
     }
 
@@ -189,6 +214,7 @@ public class ObjectPooler : MonoBehaviour
         AddGumDrops(poolcontroller[0].GetPoolAmount);
         AddTouchParticle(poolcontroller[1].GetPoolAmount);
         AddPowerUp(poolcontroller[2].GetPoolAmount);
+        //AddSameColorPowerEffect(poolcontroller[3].GetPoolAmount);
     }
 
     private void OnEnable()
@@ -211,6 +237,7 @@ public class ObjectPooler : MonoBehaviour
             DefaultSpawnTimer = MainGameSpawnTimer;
         }
         SpawnTimer = DefaultSpawnTimer;
+        CurrentSpawnTimer = DefaultSpawnTimer;
     }
 
     private void Update()
@@ -220,7 +247,7 @@ public class ObjectPooler : MonoBehaviour
         {
             SpawnObjects();
 
-            SpawnTimer = DefaultSpawnTimer;
+            SpawnTimer = CurrentSpawnTimer;
         }
     }
 
@@ -312,6 +339,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddSameColorPowerEffect(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[3].GetObjectToPool);
+            PO.transform.SetParent(GumDropParent.transform, false);
+            poolcontroller[3].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetGumDrop()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -325,6 +364,11 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetPowerUp()
     {
         return poolcontroller[2].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetSameColorPowerEffect()
+    {
+        return poolcontroller[3].GetPooledObject.Dequeue();
     }
 
     public void ReturnGumDropToPool(GameObject pooledObject)
@@ -343,5 +387,17 @@ public class ObjectPooler : MonoBehaviour
     {
         poolcontroller[2].GetPooledObject.Enqueue(pooledObject);
         pooledObject.SetActive(false);
+    }
+
+    public void ReturnSameColorPowerEffectToPool(GameObject pooledObject)
+    {
+        poolcontroller[3].GetPooledObject.Enqueue(pooledObject);
+        pooledObject.SetActive(false);
+    }
+
+    public void ResetCurrentTimer()
+    {
+        SpawnTimer = DefaultSpawnTimer;
+        CurrentSpawnTimer = DefaultSpawnTimer;
     }
 }

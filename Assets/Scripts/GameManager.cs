@@ -120,6 +120,11 @@ public class GameManager : MonoBehaviour
 
         targetColor.ReduceTimer();
 
+        if(ObjectPooler.Instance.GetCurrentSpawnTimer > ObjectPooler.Instance.GetMinimumSpawnTimer)
+        {
+            ObjectPooler.Instance.GetCurrentSpawnTimer -= 0.05f;
+        }
+
         IncreaseGumDropAndPowerUpSpeed();
     }
 

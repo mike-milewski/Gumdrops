@@ -12,6 +12,9 @@ public class PowerUpManager : MonoBehaviour
     private Transform PowerUpSymbolParent;
 
     [SerializeField]
+    private AudioSource audioSource;
+
+    [SerializeField]
     private float PowerUpSpawnTime, PowerUpSpawnChance;
 
     [SerializeField]
@@ -116,6 +119,7 @@ public class PowerUpManager : MonoBehaviour
     public void ResetPowerUpTime()
     {
         DefaultPowerUpTime = PowerUpSpawnTime;
+        audioSource.Play();
     }
 
     public bool ResetPowerUpSymbolTime()
