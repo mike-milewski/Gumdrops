@@ -15,10 +15,13 @@ public class GameManager : MonoBehaviour
     private SoundManager soundManager;
 
     [SerializeField]
-    private TextMeshProUGUI TimerText, TargetScoreText, LevelText;
+    private TextMeshProUGUI TimerText, TargetScoreText, LevelText, ScoreModifierText;
 
     [SerializeField]
-    private GameObject GameOverMenu;
+    private Animator ScoreModifierAnimator;
+
+    [SerializeField]
+    private GameObject GameOverMenu, FrozenOverlay;
 
     [SerializeField]
     private Transform PowerUpSymbolParent;
@@ -29,7 +32,7 @@ public class GameManager : MonoBehaviour
     private Color TimerTextColor;
 
     [SerializeField]
-    private int DefaultTargetScore, ScoreIncrement, GumDropMoveSpeedIncrement, MaxSpeed;
+    private int DefaultTargetScore, ScoreIncrement, GumDropMoveSpeedIncrement, MaxSpeed, ScoreModifier;
 
     [SerializeField]
     private float StartTimer;
@@ -45,17 +48,65 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private bool GameOverMenuOpened;
 
+    public int GetScoreModifier
+    {
+        get
+        {
+            return ScoreModifier;
+        }
+        set
+        {
+            ScoreModifier = value;
+        }
+    }
+
+    public Animator GetScoreModifierAnimator
+    {
+        get
+        {
+            return ScoreModifierAnimator;
+        }
+        set
+        {
+            ScoreModifierAnimator = value;
+        }
+    }
+
+    public GameObject GetFrozenOverlay
+    {
+        get
+        {
+            return FrozenOverlay;
+        }
+        set
+        {
+            FrozenOverlay = value;
+        }
+    }
+
+    public TextMeshProUGUI GetScoreModifierText
+    {
+        get
+        {
+            return ScoreModifierText;
+        }
+        set
+        {
+            ScoreModifierText = value;
+        }
+    }
+
     private void OnEnable()
     {
         PlayerPrefs.DeleteKey("HighScore");
 
         TimerTextColor = TimerText.color;
 
-        targetColor.SetStartingTimeAndColor();
-
         StartGame();
 
         StartCoroutine("WaitToStartTimer");
+
+        ScoreModifierText.text = "x" + ScoreModifier;
     }
 
     private void Update()

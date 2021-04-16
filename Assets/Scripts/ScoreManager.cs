@@ -7,6 +7,9 @@ public class ScoreManager : MonoBehaviour
     private TextMeshProUGUI ScoreText;
 
     [SerializeField]
+    private GameObject HighScoreFrame;
+
+    [SerializeField]
     private int Score;
 
     public int GetScore
@@ -41,7 +44,23 @@ public class ScoreManager : MonoBehaviour
 
         ScoreText.text = Mathf.Max(0, Score).ToString();
 
+        CheckHighScore();
+
         return ScoreText;
+    }
+
+    private void CheckHighScore()
+    {
+        var Highscorechecker = FindObjectOfType<HighScoreChecker>();
+
+        if (Score > Highscorechecker.GetHighScore)
+        {
+            HighScoreFrame.SetActive(true);
+        }
+        else
+        {
+            HighScoreFrame.SetActive(false);
+        }
     }
 
     public void UpdateScoreText()

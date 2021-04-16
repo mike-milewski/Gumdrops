@@ -146,6 +146,7 @@ public class PowerUpManager : MonoBehaviour
                     exists = true;
                     pus.GetPowerUpTime = powerUp.GetPowerTime;
                     audioSource.Play();
+
                     return exists;
                 }
                 else

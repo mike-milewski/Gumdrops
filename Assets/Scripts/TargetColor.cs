@@ -38,6 +38,8 @@ public class TargetColor : MonoBehaviour
     [SerializeField]
     private bool AboutToSwitchColor;
 
+    private bool ChangingToStartingColor;
+
     public Image GetTargetImage
     {
         get
@@ -113,6 +115,9 @@ public class TargetColor : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine("WaitToStartGame");
+        StartCoroutine("SetChangedColor");
+
+        SetTime();
     }
 
     private void Update()
@@ -175,14 +180,21 @@ public class TargetColor : MonoBehaviour
 
     public void ChooseColor()
     {
-        TargetImage.GetComponent<Animator>().SetBool("SetAnimation", false);
-        TargetImage.sprite = GumDropColors[RandomIndex];
-        ColorIndex = RandomIndex;
+        if(ChangingToStartingColor)
+        {
+            TargetImage.GetComponent<Animator>().SetBool("SetAnimation", false);
+            TargetImage.sprite = GumDropColors[RandomIndex];
+            ColorIndex = RandomIndex;
+        }
     }
 
     private void ChooseRandomColorFromStart()
     {
-        ColorIndex = Random.Range(0, color.Length);
+        var gd = FindObjectsOfType<Gumdrop>(false);
+
+        int Rand = Random.Range(0, gd.Length);
+
+        ColorIndex = gd[Rand].GetColorIndex;
 
         TargetImage.sprite = GumDropColors[ColorIndex];
     }
@@ -205,6 +217,12 @@ public class TargetColor : MonoBehaviour
         ChooseRandomColorFromStart();
     }
 
+    private void SetTime()
+    {
+        TimeToChangeColor = DefaultTimeToChangeColor;
+        CurrentTimeToChangeColor = DefaultTimeToChangeColor;
+    }
+
     public void ReduceTimer()
     {
         if(CurrentTimeToChangeColor > MinimumTimeToChangeColor)
@@ -219,10 +237,16 @@ public class TargetColor : MonoBehaviour
 
     private IEnumerator WaitToStartGame()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
+        ChooseRandomColorFromStart();
         TargetImage.GetComponent<Animator>().SetTrigger("SetFirstAnimation");
-        SetStartingTimeAndColor();
         StaticColor = false;
+    }
+
+    private IEnumerator SetChangedColor()
+    {
+        yield return new WaitForSeconds(2f);
+        ChangingToStartingColor = true;
     }
 
     public void PlayAudioSource()

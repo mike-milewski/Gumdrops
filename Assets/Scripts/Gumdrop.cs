@@ -12,7 +12,7 @@ public class Gumdrop : MonoBehaviour
     private int ScoreValue;
 
     [SerializeField]
-    private Animator animator;
+    private Animator animator, FrozenOverlay;
 
     [SerializeField]
     private SpriteRenderer spriteRenderer;
@@ -102,6 +102,18 @@ public class Gumdrop : MonoBehaviour
         set
         {
             animator = value;
+        }
+    }
+
+    public Animator GetFrozenAnimator
+    {
+        get
+        {
+            return FrozenOverlay;
+        }
+        set
+        {
+            FrozenOverlay = value;
         }
     }
 

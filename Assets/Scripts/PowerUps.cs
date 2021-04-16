@@ -6,6 +6,8 @@ public enum Powers { DoublePoints, Slow, SameColor }
 
 public class PowerUps : MonoBehaviour
 {
+    private GameManager gameManager;
+
     private PowerUpManager powerUpManager;
 
     private ObjectPooler objectPooler;
@@ -152,6 +154,8 @@ public class PowerUps : MonoBehaviour
 
         FindObjectPooler();
 
+        FindGameManager();
+
         spriteRenderer = GetComponent<SpriteRenderer>();
         circleCollider2D = GetComponent<CircleCollider2D>();
         audioSource = GetComponent<AudioSource>();
@@ -209,6 +213,13 @@ public class PowerUps : MonoBehaviour
         objectPooler = OP;
     }
 
+    private void FindGameManager()
+    {
+        var GM = FindObjectOfType<GameManager>();
+
+        gameManager = GM;
+    }
+
     public void GetPower()
     {
         if (!powerUpManager.ResetPowerUpSymbolTime())
@@ -264,13 +275,16 @@ public class PowerUps : MonoBehaviour
 
         foreach (Gumdrop gd in gumDrops)
         {
-            var effect = Instantiate(SameColorPowerEffect);
+            if(gd.GetSpriteRenderer.enabled)
+            {
+                var effect = Instantiate(SameColorPowerEffect);
 
-            effect.transform.SetParent(gd.transform, false);
+                effect.transform.SetParent(gd.transform, false);
 
-            effect.transform.position = new Vector3(gd.transform.position.x, gd.transform.position.y, -20);
+                effect.transform.position = new Vector3(gd.transform.position.x, gd.transform.position.y, -20);
 
-            effect.transform.rotation = Quaternion.identity;
+                effect.transform.rotation = Quaternion.identity;
+            }
         }
     }
 
@@ -298,6 +312,7 @@ public class PowerUps : MonoBehaviour
         {
             gd.GetScoreValue *= 2;
         }
+        gameManager.GetScoreModifierAnimator.enabled = true;
     }
 
     private void SlowPower()
@@ -308,7 +323,10 @@ public class PowerUps : MonoBehaviour
         {
             gd.GetMoveSpeed /= 2;
             gd.GetRotationSpeed /= 2;
+
+            //gd.GetFrozenAnimator.SetBool("SetAnimation", true);
         }
+        gameManager.GetFrozenOverlay.GetComponent<Animator>().SetBool("SetAnimation", true);
         objectPooler.GetCurrentSpawnTimer = 1.5f;
     }
 
@@ -334,6 +352,7 @@ public class PowerUps : MonoBehaviour
         {
             gd.GetScoreValue = gd.GetDefaultScore;
         }
+        gameManager.GetScoreModifierAnimator.enabled = true;
     }
 
     private void LoseSlowPower()
@@ -344,7 +363,10 @@ public class PowerUps : MonoBehaviour
         {
             gd.GetMoveSpeed = gd.GetIncrementalMoveSpeed;
             gd.GetRotationSpeed *= 2;
+
+            //gd.GetFrozenAnimator.SetBool("SetAnimation", false);
         }
+        gameManager.GetFrozenOverlay.GetComponent<Animator>().SetBool("SetAnimation", false);
         objectPooler.GetCurrentSpawnTimer = objectPooler.GetSpawnTimer;
     }
 
