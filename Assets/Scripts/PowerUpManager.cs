@@ -9,7 +9,7 @@ public class PowerUpManager : MonoBehaviour
     private PowerUpSymbol powerUpSymbol;
 
     [SerializeField]
-    private Transform PowerUpSymbolParent;
+    private Transform PowerUpSymbolParent, PowerUpEffectTransform;
 
     [SerializeField]
     private AudioSource audioSource;
@@ -43,6 +43,18 @@ public class PowerUpManager : MonoBehaviour
         set
         {
             PowerUpSymbolParent = value;
+        }
+    }
+
+    public Transform GetPowerUpEffectTransform
+    {
+        get
+        {
+            return PowerUpEffectTransform;
+        }
+        set
+        {
+            PowerUpEffectTransform = value;
         }
     }
 
@@ -119,7 +131,6 @@ public class PowerUpManager : MonoBehaviour
     public void ResetPowerUpTime()
     {
         DefaultPowerUpTime = PowerUpSpawnTime;
-        audioSource.Play();
     }
 
     public bool ResetPowerUpSymbolTime()
@@ -134,6 +145,7 @@ public class PowerUpManager : MonoBehaviour
                 {
                     exists = true;
                     pus.GetPowerUpTime = powerUp.GetPowerTime;
+                    audioSource.Play();
                     return exists;
                 }
                 else

@@ -231,12 +231,31 @@ public class PowerUps : MonoBehaviour
                     break;
             }
         }
+        else
+        {
+            switch (powers[PowerUpIndex])
+            {
+                case (Powers.DoublePoints):
+                    DoublePowerHitEffect.SetActive(true);
+                    break;
+                case (Powers.Slow):
+                    SlowPowerHitEffect.SetActive(true);
+                    break;
+                case (Powers.SameColor):
+                    SameColorHitEffect.SetActive(true);
+                    break;
+            }
+        }
         powerUpManager.CreatePowerUpSymbol();
     }
 
     private void CreateSlowPowerEffect()
     {
-        Instantiate(SlowPowerEffect, transform.position, Quaternion.identity);
+        var effect = Instantiate(SlowPowerEffect);
+
+        effect.transform.SetParent(powerUpManager.GetPowerUpEffectTransform);
+
+        effect.transform.position = new Vector3(transform.position.x, transform.position.y, 20);
     }
 
     private void CreateSameColorPowerEffect()
@@ -257,7 +276,6 @@ public class PowerUps : MonoBehaviour
 
     public void LosePower(int index)
     {
-        Debug.Log(index);
         switch (powers[index])
         {
             case (Powers.DoublePoints):
@@ -316,7 +334,6 @@ public class PowerUps : MonoBehaviour
         {
             gd.GetScoreValue = gd.GetDefaultScore;
         }
-        Debug.Log("Double Power Lost");
     }
 
     private void LoseSlowPower()
@@ -328,7 +345,6 @@ public class PowerUps : MonoBehaviour
             gd.GetMoveSpeed = gd.GetIncrementalMoveSpeed;
             gd.GetRotationSpeed *= 2;
         }
-        Debug.Log("Slow Power Lost");
         objectPooler.GetCurrentSpawnTimer = objectPooler.GetSpawnTimer;
     }
 
@@ -343,7 +359,6 @@ public class PowerUps : MonoBehaviour
         {
             gd.ChooseColor();
         }
-        Debug.Log("Color Power Lost");
     }
 
     public IEnumerator WaitToReturnToQueue()

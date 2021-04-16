@@ -268,6 +268,11 @@ public class GameManager : MonoBehaviour
         targetColor.GetNextColorImage.GetComponent<Animator>().SetBool("SetAnimation", false);
     }
 
+    public void ResetObjectSpawnTimer()
+    {
+        ObjectPooler.Instance.ResetCurrentTimer();
+    }
+
     private IEnumerator WaitToStartTimer()
     {
         yield return new WaitForSeconds(1);
