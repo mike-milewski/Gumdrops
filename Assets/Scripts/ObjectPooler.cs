@@ -138,6 +138,9 @@ public class ObjectPooler : MonoBehaviour
     [SerializeField]
     private float SpawnTimer, CurrentSpawnTimer;
 
+    [SerializeField]
+    private float[] SpawnTimerPerLevel;
+
     public Boundary GetBoundary
     {
         get
@@ -198,6 +201,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    public float[] GetSpawnTimerPerLevel
+    {
+        get
+        {
+            return SpawnTimerPerLevel;
+        }
+        set
+        {
+            SpawnTimerPerLevel = value;
+        }
+    }
+
     private void Awake()
     {
         #region Singleton
@@ -214,7 +229,6 @@ public class ObjectPooler : MonoBehaviour
         AddGumDrops(poolcontroller[0].GetPoolAmount);
         AddTouchParticle(poolcontroller[1].GetPoolAmount);
         AddPowerUp(poolcontroller[2].GetPoolAmount);
-        //AddSameColorPowerEffect(poolcontroller[3].GetPoolAmount);
     }
 
     private void OnEnable()
@@ -339,18 +353,6 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
-    private void AddSameColorPowerEffect(int Count)
-    {
-        for (int i = 0; i < Count; i++)
-        {
-            var PO = Instantiate(poolcontroller[3].GetObjectToPool);
-            PO.transform.SetParent(GumDropParent.transform, false);
-            poolcontroller[3].GetPooledObject.Enqueue(PO);
-
-            PO.gameObject.SetActive(false);
-        }
-    }
-
     public GameObject GetGumDrop()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -386,12 +388,6 @@ public class ObjectPooler : MonoBehaviour
     public void ReturnPowerUpToPool(GameObject pooledObject)
     {
         poolcontroller[2].GetPooledObject.Enqueue(pooledObject);
-        pooledObject.SetActive(false);
-    }
-
-    public void ReturnSameColorPowerEffectToPool(GameObject pooledObject)
-    {
-        poolcontroller[3].GetPooledObject.Enqueue(pooledObject);
         pooledObject.SetActive(false);
     }
 

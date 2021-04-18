@@ -313,6 +313,9 @@ public class PowerUps : MonoBehaviour
             gd.GetScoreValue *= 2;
         }
         gameManager.GetScoreModifierAnimator.enabled = true;
+        gameManager.GetScoreModifierAnimator.Play("ScoreModifier", -1, 0f);
+        gameManager.GetScoreModifier++;
+        gameManager.UpdateScoreModifier();
     }
 
     private void SlowPower()
@@ -352,7 +355,8 @@ public class PowerUps : MonoBehaviour
         {
             gd.GetScoreValue = gd.GetDefaultScore;
         }
-        gameManager.GetScoreModifierAnimator.enabled = true;
+        gameManager.GetScoreModifier--;
+        gameManager.UpdateScoreModifier();
     }
 
     private void LoseSlowPower()
@@ -367,7 +371,7 @@ public class PowerUps : MonoBehaviour
             //gd.GetFrozenAnimator.SetBool("SetAnimation", false);
         }
         gameManager.GetFrozenOverlay.GetComponent<Animator>().SetBool("SetAnimation", false);
-        objectPooler.GetCurrentSpawnTimer = objectPooler.GetSpawnTimer;
+        objectPooler.GetCurrentSpawnTimer = objectPooler.GetSpawnTimerPerLevel[gameManager.GetLevelIndex];
     }
 
     private void LoseSameColorPower()

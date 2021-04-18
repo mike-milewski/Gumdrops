@@ -27,6 +27,11 @@ public class Gumdrop : MonoBehaviour
     private AudioSource source;
 
     [SerializeField]
+    private AudioClip GumDropHitSoundEffect, WrongColorHitSoundEffect;
+
+    private AudioClip SoundEffectToPlay;
+
+    [SerializeField]
     private Sprite[] GumDropColors;
 
     [SerializeField]
@@ -37,7 +42,7 @@ public class Gumdrop : MonoBehaviour
 
     private int DefaultScore, ColorIndex;
 
-    private bool StoppedGumDrop;
+    private bool StoppedGumDrop, HitRightColor;
 
     private ObjectPooler objectPooler;
 
@@ -250,6 +255,8 @@ public class Gumdrop : MonoBehaviour
         source.GetComponent<AudioSource>();
 
         DefaultScore = ScoreValue;
+
+        SoundEffectToPlay = GumDropHitSoundEffect;
     }
 
     private void OnEnable()
@@ -303,10 +310,20 @@ public class Gumdrop : MonoBehaviour
         if(ColorIndex == targetColor.GetColorIndex)
         {
             AddGumDropScore();
+
+            GetStoppedGumDrop = true;
+
+            boxCollider2D.enabled = false;
+
+            animator.SetBool("SetAnimation", true);
+
+            HitRightColor = true;
         }
         else
         {
             SubtractGumDropScore();
+
+            animator.SetBool("SetAnimation", true);
         }
     }
 
@@ -319,31 +336,53 @@ public class Gumdrop : MonoBehaviour
     public void AddGumDropScore()
     {
         scoreManager.ScorePoints(ScoreValue);
+
+        scoreManager.GetScoreText.color = scoreManager.GetAddScoreColor;
     }
 
     public void SubtractGumDropScore()
     {
         scoreManager.ScorePoints(-ScoreValue);
+
+        scoreManager.GetScoreText.color = scoreManager.GetSubtractScoreColor;
     }
 
     public void PlayParticle()
     {
-        ParticleEffect.gameObject.SetActive(true);
+        if(HitRightColor)
+        {
+            ParticleEffect.gameObject.SetActive(true);
 
-        var ps = ParticleEffect.main;
+            var ps = ParticleEffect.main;
 
-        ps.startColor = color[ColorIndex];
+            ps.startColor = color[ColorIndex];
 
-        spriteRenderer.enabled = false;
+            spriteRenderer.enabled = false;
 
-        source.Play();
+            SoundEffectToPlay = GumDropHitSoundEffect;
 
-        StartCoroutine("WaitToReturnToQueue");
+            source.clip = SoundEffectToPlay;
+
+            source.Play();
+
+            StartCoroutine("WaitToReturnToQueue");
+        }
+        else
+        {
+            SoundEffectToPlay = WrongColorHitSoundEffect;
+
+            source.clip = SoundEffectToPlay;
+
+            source.Play();
+
+            animator.SetBool("SetAnimation", false);
+        }
     }
 
     private IEnumerator WaitToReturnToQueue()
     {
         yield return new WaitForSeconds(1);
+        HitRightColor = false;
         objectPooler.ReturnGumDropToPool(gameObject);
     }
 }

@@ -36,12 +36,6 @@ public class TouchInput : MonoBehaviour
                 if(hit && hit.collider.GetComponent<Gumdrop>() && !EventSystem.current.IsPointerOverGameObject(0) && scene.buildIndex != 0 && Time.timeScale > 0)
                 {
                     hit.collider.GetComponent<Gumdrop>().CheckColor();
-
-                    hit.collider.GetComponent<Gumdrop>().GetStoppedGumDrop = true;
-
-                    hit.collider.GetComponent<BoxCollider2D>().enabled = false;
-
-                    hit.collider.GetComponent<Gumdrop>().GetAnimator.SetBool("SetAnimation", true);
                 }
                 else if(hit && hit.collider.GetComponent<PowerUps>() && !EventSystem.current.IsPointerOverGameObject(0) && Time.timeScale > 0)
                 {

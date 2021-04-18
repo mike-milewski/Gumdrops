@@ -10,7 +10,22 @@ public class ScoreManager : MonoBehaviour
     private GameObject HighScoreFrame;
 
     [SerializeField]
+    private Color AddScoreColor, SubtractScoreColor;
+
+    [SerializeField]
     private int Score;
+
+    public TextMeshProUGUI GetScoreText
+    {
+        get
+        {
+            return ScoreText;
+        }
+        set
+        {
+            ScoreText = value;
+        }
+    }
 
     public int GetScore
     {
@@ -21,6 +36,30 @@ public class ScoreManager : MonoBehaviour
         set
         {
             Score = value;
+        }
+    }
+
+    public Color GetAddScoreColor
+    {
+        get
+        {
+            return AddScoreColor;
+        }
+        set
+        {
+            AddScoreColor = value;
+        }
+    }
+
+    public Color GetSubtractScoreColor
+    {
+        get
+        {
+            return SubtractScoreColor;
+        }
+        set
+        {
+            SubtractScoreColor = value;
         }
     }
 
@@ -61,6 +100,11 @@ public class ScoreManager : MonoBehaviour
         {
             HighScoreFrame.SetActive(false);
         }
+    }
+
+    public void ResetHighScoreFrameAnimation()
+    {
+        HighScoreFrame.SetActive(false);
     }
 
     public void UpdateScoreText()

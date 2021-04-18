@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float StartTimer;
 
-    private int Level;
+    private int Level, LevelIndex;
 
     private float TargetScore;
 
@@ -57,6 +57,18 @@ public class GameManager : MonoBehaviour
         set
         {
             ScoreModifier = value;
+        }
+    }
+
+    public int GetLevelIndex
+    {
+        get
+        {
+            return LevelIndex;
+        }
+        set
+        {
+            LevelIndex = value;
         }
     }
 
@@ -106,7 +118,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine("WaitToStartTimer");
 
-        ScoreModifierText.text = "x" + ScoreModifier;
+        UpdateScoreModifier();
     }
 
     private void Update()
@@ -131,6 +143,7 @@ public class GameManager : MonoBehaviour
                 {
                     ToggleMenuButton(menuButton);
                     GetComponent<AudioSource>().Play();
+                    CheckHighScore();
                     GameOverMenuOpened = true;
                 }
 
@@ -163,7 +176,7 @@ public class GameManager : MonoBehaviour
         UpdateLevel();
 
         TargetScoreText.GetComponent<Animator>().enabled = true;
-        TargetScoreText.GetComponent<Animator>().Play("Score", -1, 0f);
+        TargetScoreText.GetComponent<Animator>().Play("HighScore", -1, 0f);
 
         TimerText.GetComponent<Animator>().SetBool("Timer", false);
 
@@ -173,7 +186,8 @@ public class GameManager : MonoBehaviour
 
         if(ObjectPooler.Instance.GetCurrentSpawnTimer > ObjectPooler.Instance.GetMinimumSpawnTimer)
         {
-            ObjectPooler.Instance.GetCurrentSpawnTimer -= 0.05f;
+            ObjectPooler.Instance.GetCurrentSpawnTimer = ObjectPooler.Instance.GetSpawnTimerPerLevel[LevelIndex];
+            LevelIndex++;
         }
 
         IncreaseGumDropAndPowerUpSpeed();
@@ -296,6 +310,11 @@ public class GameManager : MonoBehaviour
         soundManager.PlayNextLevelClip();
     }
 
+    public void UpdateScoreModifier()
+    {
+        ScoreModifierText.text = ScoreModifier.ToString();
+    }
+
     public void ToggleMenuButton(Button MenuButton)
     {
         MenuButton.interactable = false;
@@ -322,6 +341,17 @@ public class GameManager : MonoBehaviour
     public void ResetObjectSpawnTimer()
     {
         ObjectPooler.Instance.ResetCurrentTimer();
+    }
+
+    public void ResetScoreModifier()
+    {
+        ScoreModifier = 1;
+        UpdateScoreModifier();
+    }
+
+    public void ResetLevelIndex()
+    {
+        LevelIndex = 0;
     }
 
     private IEnumerator WaitToStartTimer()

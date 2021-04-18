@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Score
+  m_Name: ScoreModifier
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -250,13 +250,6 @@ AnimationClip:
   m_Events:
   - time: 0.5
     functionName: TurnOffAnimator
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5
-    functionName: ReturnScoreColorToDefault
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -117,6 +117,8 @@ public class TargetColor : MonoBehaviour
         StartCoroutine("WaitToStartGame");
         StartCoroutine("SetChangedColor");
 
+        ChooseRandomColorFromStart();
+
         SetTime();
     }
 
@@ -190,11 +192,7 @@ public class TargetColor : MonoBehaviour
 
     private void ChooseRandomColorFromStart()
     {
-        var gd = FindObjectsOfType<Gumdrop>(false);
-
-        int Rand = Random.Range(0, gd.Length);
-
-        ColorIndex = gd[Rand].GetColorIndex;
+        ColorIndex = Random.Range(0, color.Length);
 
         TargetImage.sprite = GumDropColors[ColorIndex];
     }
@@ -238,7 +236,6 @@ public class TargetColor : MonoBehaviour
     private IEnumerator WaitToStartGame()
     {
         yield return new WaitForSeconds(0.5f);
-        ChooseRandomColorFromStart();
         TargetImage.GetComponent<Animator>().SetTrigger("SetFirstAnimation");
         StaticColor = false;
     }
