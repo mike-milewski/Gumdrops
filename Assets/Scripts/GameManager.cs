@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     private float Timer;
 
-    private bool StartedGame;
+    private bool StartedGame, TimeScaleIsZero;
 
     [SerializeField]
     private bool GameOverMenuOpened;
@@ -69,6 +69,18 @@ public class GameManager : MonoBehaviour
         set
         {
             LevelIndex = value;
+        }
+    }
+
+    public bool GetTimeScaleIsZero
+    {
+        get
+        {
+            return TimeScaleIsZero;
+        }
+        set
+        {
+            TimeScaleIsZero = value;
         }
     }
 
@@ -323,12 +335,14 @@ public class GameManager : MonoBehaviour
     public void OpenMenu(Animator animator)
     {
         animator.SetBool("OpenMenu", true);
+        TimeScaleIsZero = true;
         Time.timeScale = 0;
     }
 
     public void CloseMenu(Animator animator)
     {
         Time.timeScale = 1;
+        TimeScaleIsZero = false;
         animator.SetBool("OpenMenu", false);
     }
 

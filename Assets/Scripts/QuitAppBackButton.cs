@@ -1,22 +1,31 @@
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class QuitAppBackButton : MonoBehaviour
 {
-    public static QuitAppBackButton Instance = null;
+    [SerializeField]
+    private GameObject QuitMenu;
 
-    private void Awake()
+    [SerializeField]
+    private Button YesBtn, NoBtn;
+
+    [SerializeField]
+    private Button[] buttons;
+
+    [SerializeField]
+    private AudioSource audioSource;
+
+    private Scene scene;
+
+    [SerializeField]
+    private bool CanQuit;
+
+    private bool IsMenuOpened;
+
+    private void OnEnable()
     {
-        #region Singleton
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else if(Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        DontDestroyOnLoad(gameObject);
-        #endregion
+        scene = SceneManager.GetActiveScene();
     }
 
     private void Update()
@@ -25,8 +34,90 @@ public class QuitAppBackButton : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Application.Quit();
+                if(CanQuit)
+                {
+                    if (!IsMenuOpened)
+                    {
+                        QuitMenu.GetComponent<Animator>().SetBool("OpenMenu", true);
+                        DisableButtons();
+                        EnableYesAndNoButtons();
+                        audioSource.Play();
+                        IsMenuOpened = true;
+
+                        if (CheckMainGameScene())
+                        {
+                            Time.timeScale = 0;
+                        }
+                    }
+                    else return;
+                }
+                else return;
             }
         }
+    }
+
+    private bool CheckMainGameScene()
+    {
+        bool Correct = false;
+
+        if(scene.buildIndex == 1)
+        {
+            Correct = true;
+        }
+        else
+        {
+            Correct = false;
+        }
+
+        return Correct;
+    }
+
+    public void DisableButtons()
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].interactable = false;
+        }
+    }
+
+    public void DisableYesAndNoButtons()
+    {
+        YesBtn.interactable = false;
+        NoBtn.interactable = false;
+    }
+
+    private void EnableYesAndNoButtons()
+    {
+        YesBtn.interactable = true;
+        NoBtn.interactable = true;
+    }
+
+    public void EnableButtons()
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].interactable = true;
+        }
+    }
+
+    public void CheckTimeScale()
+    {
+        var Gamemanager = FindObjectOfType<GameManager>();
+
+        if (!Gamemanager.GetTimeScaleIsZero)
+        {
+            Time.timeScale = 1;
+        }
+        else return;
+    }
+
+    public void ResetIsMenuOpened()
+    {
+        IsMenuOpened = false;
+    }
+
+    public void DisableCanQuit()
+    {
+        CanQuit = false;
     }
 }

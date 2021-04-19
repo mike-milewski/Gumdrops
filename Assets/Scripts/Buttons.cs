@@ -8,6 +8,11 @@ public class Buttons : MonoBehaviour
         OverlayManager.Instance.PlayOverlayAnimator();
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
     public void PlayMenuAnimator(Animator animator)
     {
         animator.SetBool("OpenMenu", true);
