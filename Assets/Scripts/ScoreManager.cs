@@ -4,13 +4,16 @@ using TMPro;
 public class ScoreManager : MonoBehaviour
 {
     [SerializeField]
+    private GameManager gameManager;
+
+    [SerializeField]
     private TextMeshProUGUI ScoreText;
 
     [SerializeField]
     private GameObject HighScoreFrame;
 
     [SerializeField]
-    private Color AddScoreColor, SubtractScoreColor;
+    private Color AddScoreColor, SubtractScoreColor, HighScoreColor;
 
     [SerializeField]
     private int Score;
@@ -90,11 +93,10 @@ public class ScoreManager : MonoBehaviour
 
     private void CheckHighScore()
     {
-        var Highscorechecker = FindObjectOfType<HighScoreChecker>();
-
-        if (Score > Highscorechecker.GetHighScore)
+        if (Score > HighScoreChecker.Instance.GetHighScore)
         {
             HighScoreFrame.SetActive(true);
+            gameManager.GetBestScoreText.text = "Best: <#00FF5F>" + Score + "</color>";
         }
         else
         {

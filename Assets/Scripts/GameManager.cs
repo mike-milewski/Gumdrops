@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     private SoundManager soundManager;
 
     [SerializeField]
-    private TextMeshProUGUI TimerText, TargetScoreText, LevelText, ScoreModifierText;
+    private TextMeshProUGUI TimerText, TargetScoreText, LevelText, ScoreModifierText, BestScoreText;
 
     [SerializeField]
     private Animator ScoreModifierAnimator;
@@ -120,6 +120,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public TextMeshProUGUI GetBestScoreText
+    {
+        get
+        {
+            return BestScoreText;
+        }
+        set
+        {
+            BestScoreText = value;
+        }
+    }
+
     private void OnEnable()
     {
         PlayerPrefs.DeleteKey("HighScore");
@@ -131,6 +143,8 @@ public class GameManager : MonoBehaviour
         StartCoroutine("WaitToStartTimer");
 
         UpdateScoreModifier();
+
+        CheckHighScoreText();
     }
 
     private void Update()
@@ -161,6 +175,18 @@ public class GameManager : MonoBehaviour
 
                 Time.timeScale = 0;
             }
+        }
+    }
+
+    private void CheckHighScoreText()
+    {
+        if(PlayerPrefs.HasKey("HighScore"))
+        {
+            BestScoreText.text = "Best: " + HighScoreChecker.Instance.GetHighScore;
+        }
+        else
+        {
+            BestScoreText.text = "";
         }
     }
 
@@ -295,13 +321,11 @@ public class GameManager : MonoBehaviour
 
     public void CheckHighScore()
     {
-        var Highscorechecker = FindObjectOfType<HighScoreChecker>();
-
-        if(scoreManager.GetScore > Highscorechecker.GetHighScore)
+        if(scoreManager.GetScore > HighScoreChecker.Instance.GetHighScore)
         {
-            Highscorechecker.GetHighScore = scoreManager.GetScore;
+            HighScoreChecker.Instance.GetHighScore = scoreManager.GetScore;
 
-            PlayerPrefs.SetInt("HighScore", Highscorechecker.GetHighScore);
+            PlayerPrefs.SetInt("HighScore", HighScoreChecker.Instance.GetHighScore);
             PlayerPrefs.Save();
         }
     }

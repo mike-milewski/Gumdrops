@@ -26,7 +26,7 @@ public class Boundary
         }
         else
         {
-            bounds = cam.ViewportToWorldPoint(new Vector3(Random.Range(MinX, MaxX), 0.9f, 10));
+            bounds = cam.ViewportToWorldPoint(new Vector3(Random.Range(MinX, MaxX), 0.87f, 10));
         }
 
         return bounds;
