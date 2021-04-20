@@ -13,10 +13,12 @@ public class ScoreManager : MonoBehaviour
     private GameObject HighScoreFrame;
 
     [SerializeField]
-    private Color AddScoreColor, SubtractScoreColor, HighScoreColor;
+    private Color AddScoreColor, SubtractScoreColor, BestScoreColor, DefaultBestScoreColor;
 
     [SerializeField]
     private int Score;
+
+    private int NewHighScore;
 
     public TextMeshProUGUI GetScoreText
     {
@@ -39,6 +41,18 @@ public class ScoreManager : MonoBehaviour
         set
         {
             Score = value;
+        }
+    }
+
+    public int GetNewHighScore
+    {
+        get
+        {
+            return NewHighScore;
+        }
+        set
+        {
+            NewHighScore = value;
         }
     }
 
@@ -96,11 +110,30 @@ public class ScoreManager : MonoBehaviour
         if (Score > HighScoreChecker.Instance.GetHighScore)
         {
             HighScoreFrame.SetActive(true);
-            gameManager.GetBestScoreText.text = "Best: <#00FF5F>" + Score + "</color>";
         }
         else
         {
             HighScoreFrame.SetActive(false);
+        }
+    }
+
+    public void CheckBestScoreText()
+    {
+        if(PlayerPrefs.HasKey("HighScore"))
+        {
+            if (Score > HighScoreChecker.Instance.GetHighScore)
+            {
+                NewHighScore = Score;
+                gameManager.GetBestScoreNumberText.text = NewHighScore.ToString();
+                gameManager.GetBestScoreNumberText.color = BestScoreColor;
+            }
+        }
+        else
+        {
+            if (Score > HighScoreChecker.Instance.GetHighScore)
+            {
+                NewHighScore = Score;
+            }
         }
     }
 
@@ -112,5 +145,10 @@ public class ScoreManager : MonoBehaviour
     public void UpdateScoreText()
     {
         ScoreText.text = Score.ToString();
+    }
+
+    public void ResetBestColorTextColor()
+    {
+        gameManager.GetBestScoreNumberText.color = DefaultBestScoreColor;
     }
 }

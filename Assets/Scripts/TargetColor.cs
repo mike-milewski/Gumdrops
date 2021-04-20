@@ -120,6 +120,8 @@ public class TargetColor : MonoBehaviour
         ChooseRandomColorFromStart();
 
         SetTime();
+
+        ChangingToStartingColor = false;
     }
 
     private void Update()
@@ -184,9 +186,16 @@ public class TargetColor : MonoBehaviour
     {
         if(ChangingToStartingColor)
         {
-            TargetImage.GetComponent<Animator>().SetBool("SetAnimation", false);
-            TargetImage.sprite = GumDropColors[RandomIndex];
-            ColorIndex = RandomIndex;
+            if(!StaticColor)
+            {
+                TargetImage.GetComponent<Animator>().SetBool("SetAnimation", false);
+                TargetImage.sprite = GumDropColors[RandomIndex];
+                ColorIndex = RandomIndex;
+            }
+            else
+            {
+                TargetImage.GetComponent<Animator>().SetBool("SetAnimation", false);
+            }
         }
     }
 

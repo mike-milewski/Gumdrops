@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     private SoundManager soundManager;
 
     [SerializeField]
-    private TextMeshProUGUI TimerText, TargetScoreText, LevelText, ScoreModifierText, BestScoreText;
+    private TextMeshProUGUI TimerText, TargetScoreText, LevelText, ScoreModifierText, BestScoreNumberText, BestScoreText;
 
     [SerializeField]
     private Animator ScoreModifierAnimator;
@@ -37,13 +37,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float StartTimer;
 
+    [SerializeField]
     private int Level, LevelIndex;
 
     private float TargetScore;
 
     private float Timer;
 
-    private bool StartedGame, TimeScaleIsZero;
+    private bool StartTimerCount, TimeScaleIsZero;
 
     [SerializeField]
     private bool GameOverMenuOpened;
@@ -84,6 +85,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool GetStartTimerCount
+    {
+        get
+        {
+            return StartTimerCount;
+        }
+        set
+        {
+            StartTimerCount = value;
+        }
+    }
+
     public Animator GetScoreModifierAnimator
     {
         get
@@ -120,21 +133,33 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public TextMeshProUGUI GetBestScoreText
+    public TextMeshProUGUI GetBestScoreNumberText
     {
         get
         {
-            return BestScoreText;
+            return BestScoreNumberText;
         }
         set
         {
-            BestScoreText = value;
+            BestScoreNumberText = value;
+        }
+    }
+
+    public TextMeshProUGUI GetTimerText
+    {
+        get
+        {
+            return TimerText;
+        }
+        set
+        {
+            TimerText = value;
         }
     }
 
     private void OnEnable()
     {
-        PlayerPrefs.DeleteKey("HighScore");
+        //PlayerPrefs.DeleteKey("HighScore");
 
         TimerTextColor = TimerText.color;
 
@@ -149,13 +174,13 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(StartedGame)
+        if(StartTimerCount)
         {
             Timer -= Time.deltaTime;
         }
         TimerText.text = Mathf.Clamp(Timer, 0, Timer).ToString("F0");
         CheckTimer();
-        if(Timer <= 0)
+        if (Timer <= 0)
         {
             if(scoreManager.GetScore >= TargetScore)
             {
@@ -182,11 +207,13 @@ public class GameManager : MonoBehaviour
     {
         if(PlayerPrefs.HasKey("HighScore"))
         {
-            BestScoreText.text = "Best: " + HighScoreChecker.Instance.GetHighScore;
+            BestScoreText.gameObject.SetActive(true);
+            BestScoreNumberText.text = HighScoreChecker.Instance.GetHighScore.ToString();
         }
         else
         {
-            BestScoreText.text = "";
+            BestScoreText.gameObject.SetActive(false);
+            BestScoreNumberText.text = "";
         }
     }
 
@@ -224,8 +251,8 @@ public class GameManager : MonoBehaviour
 
         if(ObjectPooler.Instance.GetCurrentSpawnTimer > ObjectPooler.Instance.GetMinimumSpawnTimer)
         {
-            ObjectPooler.Instance.GetCurrentSpawnTimer = ObjectPooler.Instance.GetSpawnTimerPerLevel[LevelIndex];
             LevelIndex++;
+            ObjectPooler.Instance.GetCurrentSpawnTimer = ObjectPooler.Instance.GetSpawnTimerPerLevel[LevelIndex];
         }
 
         IncreaseGumDropAndPowerUpSpeed();
@@ -321,9 +348,9 @@ public class GameManager : MonoBehaviour
 
     public void CheckHighScore()
     {
-        if(scoreManager.GetScore > HighScoreChecker.Instance.GetHighScore)
+        if(scoreManager.GetNewHighScore > HighScoreChecker.Instance.GetHighScore)
         {
-            HighScoreChecker.Instance.GetHighScore = scoreManager.GetScore;
+            HighScoreChecker.Instance.GetHighScore = scoreManager.GetNewHighScore;
 
             PlayerPrefs.SetInt("HighScore", HighScoreChecker.Instance.GetHighScore);
             PlayerPrefs.Save();
@@ -395,6 +422,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator WaitToStartTimer()
     {
         yield return new WaitForSeconds(1);
-        StartedGame = true;
+        StartTimerCount = true;
     }
 }

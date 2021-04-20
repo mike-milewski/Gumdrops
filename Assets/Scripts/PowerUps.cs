@@ -326,10 +326,11 @@ public class PowerUps : MonoBehaviour
         {
             gd.GetMoveSpeed /= 2;
             gd.GetRotationSpeed /= 2;
-
-            //gd.GetFrozenAnimator.SetBool("SetAnimation", true);
         }
+        gameManager.GetStartTimerCount = false;
+        gameManager.GetTimerText.GetComponent<Animator>().speed = 0;
         gameManager.GetFrozenOverlay.GetComponent<Animator>().SetBool("SetAnimation", true);
+
         objectPooler.GetCurrentSpawnTimer = 1.5f;
     }
 
@@ -367,10 +368,11 @@ public class PowerUps : MonoBehaviour
         {
             gd.GetMoveSpeed = gd.GetIncrementalMoveSpeed;
             gd.GetRotationSpeed *= 2;
-
-            //gd.GetFrozenAnimator.SetBool("SetAnimation", false);
         }
+        gameManager.GetStartTimerCount = true;
+        gameManager.GetTimerText.GetComponent<Animator>().speed = 1;
         gameManager.GetFrozenOverlay.GetComponent<Animator>().SetBool("SetAnimation", false);
+
         objectPooler.GetCurrentSpawnTimer = objectPooler.GetSpawnTimerPerLevel[gameManager.GetLevelIndex];
     }
 

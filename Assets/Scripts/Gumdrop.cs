@@ -12,7 +12,7 @@ public class Gumdrop : MonoBehaviour
     private int ScoreValue;
 
     [SerializeField]
-    private Animator animator, FrozenOverlay;
+    private Animator animator;
 
     [SerializeField]
     private SpriteRenderer spriteRenderer;
@@ -40,6 +40,7 @@ public class Gumdrop : MonoBehaviour
     [SerializeField]
     private Color[] color;
 
+    [SerializeField]
     private int DefaultScore, ColorIndex;
 
     private bool StoppedGumDrop, HitRightColor;
@@ -107,18 +108,6 @@ public class Gumdrop : MonoBehaviour
         set
         {
             animator = value;
-        }
-    }
-
-    public Animator GetFrozenAnimator
-    {
-        get
-        {
-            return FrozenOverlay;
-        }
-        set
-        {
-            FrozenOverlay = value;
         }
     }
 
@@ -338,6 +327,8 @@ public class Gumdrop : MonoBehaviour
         scoreManager.ScorePoints(ScoreValue);
 
         scoreManager.GetScoreText.color = scoreManager.GetAddScoreColor;
+
+        scoreManager.CheckBestScoreText();
     }
 
     public void SubtractGumDropScore()

@@ -49,18 +49,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolcontroller:
-  - ObjectToPool: {fileID: 2682672891622776841, guid: 11d1c2d2c5fac16408b2ee5c9fbe73a8, type: 3}
+  - ObjectToPool: {fileID: 2682672891622776841, guid: 11d1c2d2c5fac16408b2ee5c9fbe73a8,
+      type: 3}
     PoolAmount: 30
-  - ObjectToPool: {fileID: 1176168246839325689, guid: 1e4daa07e738f6c47b92274ff61a7e6c, type: 3}
+  - ObjectToPool: {fileID: 1176168246839325689, guid: 1e4daa07e738f6c47b92274ff61a7e6c,
+      type: 3}
     PoolAmount: 15
-  - ObjectToPool: {fileID: 3578594078837910392, guid: 71bc94d7b3930404e8a17db1d64092c3, type: 3}
+  - ObjectToPool: {fileID: 3578594078837910392, guid: 71bc94d7b3930404e8a17db1d64092c3,
+      type: 3}
     PoolAmount: 1
+  - ObjectToPool: {fileID: 4251492396654465860, guid: 8a538ae3093ca4b429883b734453315f,
+      type: 3}
+    PoolAmount: 30
   boundary:
     cam: {fileID: 0}
     MinX: 0.15
     MaxX: 0.85
   GumDropParent: {fileID: 0}
   TouchParticleParent: {fileID: 0}
-  DefaultSpawnTimer: 1
+  DefaultSpawnTimer: 0.7
   MainMenuSpawnTimer: 0.7
-  MainGameSpawnTimer: 1
+  MainGameSpawnTimer: 0.7
+  MinimumSpawnTimer: 0.6
+  SpawnTimer: 0
+  CurrentSpawnTimer: 0
+  SpawnTimerPerLevel:
+  - 0.65
+  - 0.6
+  - 0.55
+  - 0.5
+  - 0.45
+  - 0.4
+  - 0.35
+  - 0.3
