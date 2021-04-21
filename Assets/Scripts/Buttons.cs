@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Buttons : MonoBehaviour
 {
@@ -26,5 +27,33 @@ public class Buttons : MonoBehaviour
     public void OpenLink(string Link)
     {
         Application.OpenURL(Link);
+    }
+
+    public void SaveBackgroundVolume(Slider slider)
+    {
+        if(!PlayerPrefs.HasKey("BackgroundVolume"))
+        {
+            PlayerPrefs.SetFloat("BackgroundVolume", slider.value);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            PlayerPrefs.SetFloat("BackgroundVolume", slider.value);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public void SaveSoundEffectVolume(Slider slider)
+    {
+        if (!PlayerPrefs.HasKey("SoundEffectVolume"))
+        {
+            PlayerPrefs.SetFloat("SoundEffectVolume", slider.value);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            PlayerPrefs.SetFloat("SoundEffectVolume", slider.value);
+            PlayerPrefs.Save();
+        }
     }
 }

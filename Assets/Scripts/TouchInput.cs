@@ -45,6 +45,8 @@ public class TouchInput : MonoBehaviour
 
                     hit.collider.GetComponent<SpriteRenderer>().enabled = false;
 
+                    hit.collider.GetComponent<PowerUps>().GetAudioSource.volume = PlayerPrefs.GetFloat("SoundEffectsVolume");
+
                     hit.collider.GetComponent<PowerUps>().GetAudioSource.Play();
 
                     hit.collider.GetComponent<PowerUps>().GetPowerParticle.SetActive(false);
