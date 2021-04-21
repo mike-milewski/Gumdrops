@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class SoundManager : MonoBehaviour
 {
     [SerializeField]
-    private AudioSource audioSource;
+    private AudioSource audioSource, BackgroundMusicSource;
 
     [SerializeField]
     private AudioClip clip;
@@ -22,8 +22,32 @@ public class SoundManager : MonoBehaviour
 
     private void OnEnable()
     {
-        BackgroundMusicSlider.value = PlayerPrefs.GetFloat("BackgroundMusicVolume");
-        SoundEffectSlider.value = PlayerPrefs.GetFloat("SoundEffectsVolume");
+        //PlayerPrefs.DeleteKey("BackgroundVolume");
+        //PlayerPrefs.DeleteKey("SoundEffectVolume");
+
+        if(!PlayerPrefs.HasKey("BackgroundVolume"))
+        {
+            PlayerPrefs.SetFloat("BackgroundVolume", 1);
+            PlayerPrefs.Save();
+
+            BackgroundMusicSlider.value = PlayerPrefs.GetFloat("BackgroundVolume");
+        }
+        else
+        {
+            BackgroundMusicSlider.value = PlayerPrefs.GetFloat("BackgroundVolume");
+        }
+
+        if (!PlayerPrefs.HasKey("SoundEffectVolume"))
+        {
+            PlayerPrefs.SetFloat("SoundEffectVolume", 1);
+            PlayerPrefs.Save();
+
+            SoundEffectSlider.value = PlayerPrefs.GetFloat("SoundEffectVolume");
+        }
+        else
+        {
+            SoundEffectSlider.value = PlayerPrefs.GetFloat("SoundEffectVolume");
+        }
     }
 
     public void PauseMainGameTheme(AudioSource audioSource)
@@ -51,7 +75,7 @@ public class SoundManager : MonoBehaviour
 
     public void BgmSlider(Slider slider)
     {
-        audioSource.volume = slider.value;
+        BackgroundMusicSource.volume = slider.value;
     }
 
     public void SEslider(Slider slider)

@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     private TextMeshProUGUI TimerText, TargetScoreText, LevelText, ScoreModifierText, BestScoreNumberText, BestScoreText;
 
     [SerializeField]
-    private Animator ScoreModifierAnimator;
+    private Animator ScoreModifierAnimator, IceFrameAnimator;
 
     [SerializeField]
     private GameObject GameOverMenu, FrozenOverlay;
@@ -106,6 +106,18 @@ public class GameManager : MonoBehaviour
         set
         {
             ScoreModifierAnimator = value;
+        }
+    }
+
+    public Animator GetIceFrameAnimator
+    {
+        get
+        {
+            return IceFrameAnimator;
+        }
+        set
+        {
+            IceFrameAnimator = value;
         }
     }
 
@@ -269,6 +281,8 @@ public class GameManager : MonoBehaviour
         Timer = StartTimer;
 
         TimerText.GetComponent<Animator>().SetBool("Timer", false);
+        FrozenOverlay.GetComponent<Animator>().SetBool("SetAnimation", false);
+        IceFrameAnimator.SetBool("SetAnimation", false);
 
         TimerText.color = TimerTextColor;
 

@@ -329,6 +329,7 @@ public class PowerUps : MonoBehaviour
         }
         gameManager.GetStartTimerCount = false;
         gameManager.GetTimerText.GetComponent<Animator>().speed = 0;
+        gameManager.GetIceFrameAnimator.SetBool("SetAnimation", true);
         gameManager.GetFrozenOverlay.GetComponent<Animator>().SetBool("SetAnimation", true);
 
         objectPooler.GetCurrentSpawnTimer = 1.5f;
@@ -371,6 +372,7 @@ public class PowerUps : MonoBehaviour
         }
         gameManager.GetStartTimerCount = true;
         gameManager.GetTimerText.GetComponent<Animator>().speed = 1;
+        gameManager.GetIceFrameAnimator.SetBool("SetAnimation", false);
         gameManager.GetFrozenOverlay.GetComponent<Animator>().SetBool("SetAnimation", false);
 
         objectPooler.GetCurrentSpawnTimer = objectPooler.GetSpawnTimerPerLevel[gameManager.GetLevelIndex];

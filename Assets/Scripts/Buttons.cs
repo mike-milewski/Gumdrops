@@ -31,29 +31,13 @@ public class Buttons : MonoBehaviour
 
     public void SaveBackgroundVolume(Slider slider)
     {
-        if(!PlayerPrefs.HasKey("BackgroundVolume"))
-        {
-            PlayerPrefs.SetFloat("BackgroundVolume", slider.value);
-            PlayerPrefs.Save();
-        }
-        else
-        {
-            PlayerPrefs.SetFloat("BackgroundVolume", slider.value);
-            PlayerPrefs.Save();
-        }
+        PlayerPrefs.SetFloat("BackgroundVolume", slider.value);
+        PlayerPrefs.Save();
     }
 
     public void SaveSoundEffectVolume(Slider slider)
     {
-        if (!PlayerPrefs.HasKey("SoundEffectVolume"))
-        {
-            PlayerPrefs.SetFloat("SoundEffectVolume", slider.value);
-            PlayerPrefs.Save();
-        }
-        else
-        {
-            PlayerPrefs.SetFloat("SoundEffectVolume", slider.value);
-            PlayerPrefs.Save();
-        }
+        PlayerPrefs.SetFloat("SoundEffectVolume", slider.value);
+        PlayerPrefs.Save();
     }
 }
