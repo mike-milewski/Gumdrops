@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -7,16 +8,19 @@ public class ScoreManager : MonoBehaviour
     private GameManager gameManager;
 
     [SerializeField]
-    private TextMeshProUGUI ScoreText;
+    private TextMeshProUGUI ScoreText, BonusScoreText;
 
     [SerializeField]
-    private GameObject HighScoreFrame;
+    private Animator BonusScoreFrameAnimator;
+
+    [SerializeField]
+    private GameObject ScoreFrame;
 
     [SerializeField]
     private Color AddScoreColor, SubtractScoreColor, BestScoreColor, DefaultBestScoreColor;
 
     [SerializeField]
-    private int Score;
+    private int Score, ScoreBonus, CorrectGumDropInputs, MaxGumDropInputs;
 
     private int NewHighScore;
 
@@ -53,6 +57,18 @@ public class ScoreManager : MonoBehaviour
         set
         {
             NewHighScore = value;
+        }
+    }
+
+    public int GetCorrectGumDropInputs
+    {
+        get
+        {
+            return CorrectGumDropInputs;
+        }
+        set
+        {
+            CorrectGumDropInputs = value;
         }
     }
 
@@ -100,20 +116,22 @@ public class ScoreManager : MonoBehaviour
 
         ScoreText.text = Mathf.Max(0, Score).ToString();
 
-        CheckHighScore();
+        CheckGumDropHits();
+
+        CheckTargetScore();
 
         return ScoreText;
     }
 
-    private void CheckHighScore()
+    public void CheckTargetScore()
     {
-        if (Score > HighScoreChecker.Instance.GetHighScore)
+        if (Score >= gameManager.GetTargetScore)
         {
-            HighScoreFrame.SetActive(true);
+            ScoreFrame.SetActive(true);
         }
         else
         {
-            HighScoreFrame.SetActive(false);
+            ScoreFrame.SetActive(false);
         }
     }
 
@@ -137,9 +155,37 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
+    private void CheckGumDropHits()
+    {
+        if(CorrectGumDropInputs >= MaxGumDropInputs)
+        {
+            int BonusScore = ScoreBonus * gameManager.GetScoreModifier;
+
+            Score += BonusScore;
+
+            BonusScoreFrameAnimator.SetBool("BonusScore", true);
+
+            BonusScoreText.text = "BONUS \n" + BonusScore;
+
+            BonusScoreFrameAnimator.gameObject.GetComponent<AudioSource>().Play();
+
+            StartCoroutine("ResetBonusAnimator");
+
+            UpdateScoreText();
+
+            CorrectGumDropInputs = 0;
+        }
+    }
+
+    private IEnumerator ResetBonusAnimator()
+    {
+        yield return new WaitForSeconds(1.5f);
+        BonusScoreFrameAnimator.SetBool("BonusScore", false);
+    }
+
     public void ResetHighScoreFrameAnimation()
     {
-        HighScoreFrame.SetActive(false);
+        ScoreFrame.SetActive(false);
     }
 
     public void UpdateScoreText()

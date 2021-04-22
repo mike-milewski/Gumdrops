@@ -298,6 +298,8 @@ public class Gumdrop : MonoBehaviour
     {
         if(ColorIndex == targetColor.GetColorIndex)
         {
+            scoreManager.GetCorrectGumDropInputs++;
+
             AddGumDropScore();
 
             GetStoppedGumDrop = true;
@@ -311,6 +313,8 @@ public class Gumdrop : MonoBehaviour
         else
         {
             SubtractGumDropScore();
+
+            scoreManager.GetCorrectGumDropInputs = 0;
 
             animator.SetBool("SetAnimation", true);
         }

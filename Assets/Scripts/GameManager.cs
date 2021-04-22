@@ -32,15 +32,15 @@ public class GameManager : MonoBehaviour
     private Color TimerTextColor;
 
     [SerializeField]
-    private int DefaultTargetScore, ScoreIncrement, GumDropMoveSpeedIncrement, MaxSpeed, ScoreModifier;
+    private int GumDropMoveSpeedIncrement, MaxSpeed, ScoreModifier;
+
+    [SerializeField]
+    private int[] ScoreIncrement;
 
     [SerializeField]
     private float StartTimer;
 
-    [SerializeField]
-    private int Level, LevelIndex;
-
-    private float TargetScore;
+    private int Level, LevelIndex, TargetScore, ScoreIncrementIndex;
 
     private float Timer;
 
@@ -70,6 +70,18 @@ public class GameManager : MonoBehaviour
         set
         {
             LevelIndex = value;
+        }
+    }
+
+    public int GetTargetScore
+    {
+        get
+        {
+            return TargetScore;
+        }
+        set
+        {
+            TargetScore = value;
         }
     }
 
@@ -243,10 +255,25 @@ public class GameManager : MonoBehaviour
         GameOverMenuOpened = false;
     }
 
+    private void CheckScoreIncrement()
+    {
+        if(ScoreIncrementIndex < ScoreIncrement.Length)
+        {
+            ScoreIncrementIndex++;
+            TargetScore = ScoreIncrement[ScoreIncrementIndex];
+        }
+        else
+        {
+            int BonusLevel = Level * 50;
+
+            TargetScore = ScoreIncrement[ScoreIncrementIndex] + BonusLevel;
+        }
+    }
+
     private void NextLevel()
     {
         Timer = StartTimer;
-        TargetScore += ScoreIncrement;
+        CheckScoreIncrement();
 
         TargetScoreText.text = TargetScore.ToString();
 
@@ -267,6 +294,8 @@ public class GameManager : MonoBehaviour
             ObjectPooler.Instance.GetCurrentSpawnTimer = ObjectPooler.Instance.GetSpawnTimerPerLevel[LevelIndex];
         }
 
+        scoreManager.CheckTargetScore();
+
         IncreaseGumDropAndPowerUpSpeed();
     }
 
@@ -286,7 +315,7 @@ public class GameManager : MonoBehaviour
 
         TimerText.color = TimerTextColor;
 
-        TargetScore = DefaultTargetScore;
+        TargetScore = ScoreIncrement[0];
 
         scoreManager.GetScore = 0;
 
