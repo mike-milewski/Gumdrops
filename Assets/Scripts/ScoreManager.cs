@@ -24,6 +24,8 @@ public class ScoreManager : MonoBehaviour
 
     private int NewHighScore;
 
+    private bool GoalReached;
+
     public TextMeshProUGUI GetScoreText
     {
         get
@@ -127,11 +129,20 @@ public class ScoreManager : MonoBehaviour
     {
         if (Score >= gameManager.GetTargetScore)
         {
-            ScoreFrame.SetActive(true);
+            if (!GoalReached)
+            {
+                ScoreFrame.SetActive(true);
+                ScoreFrame.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("SoundEffectVolume");
+                ScoreFrame.GetComponent<AudioSource>().Play();
+
+                GoalReached = true;
+            }
         }
         else
         {
             ScoreFrame.SetActive(false);
+
+            GoalReached = false;
         }
     }
 

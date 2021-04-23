@@ -76,30 +76,6 @@ public class PowerUps : MonoBehaviour
         }
     }
 
-    public CircleCollider2D GetCircleCollider2D
-    {
-        get
-        {
-            return circleCollider2D;
-        }
-        set
-        {
-            circleCollider2D = value;
-        }
-    }
-
-    public AudioSource GetAudioSource
-    {
-        get
-        {
-            return audioSource;
-        }
-        set
-        {
-            audioSource = value;
-        }
-    }
-
     public AudioClip GetSoundToPlay
     {
         get
@@ -109,18 +85,6 @@ public class PowerUps : MonoBehaviour
         set
         {
             SoundToPlay = value;
-        }
-    }
-
-    public GameObject GetPowerParticle
-    {
-        get
-        {
-            return PowerParticle;
-        }
-        set
-        {
-            PowerParticle = value;
         }
     }
 
@@ -241,6 +205,12 @@ public class PowerUps : MonoBehaviour
                     SameColorHitEffect.SetActive(true);
                     break;
             }
+
+            circleCollider2D.enabled = false;
+            spriteRenderer.enabled = false;
+            audioSource.volume = PlayerPrefs.GetFloat("SoundEffectVolume");
+            audioSource.Play();
+            PowerParticle.SetActive(false);
         }
         else
         {
@@ -248,7 +218,7 @@ public class PowerUps : MonoBehaviour
             {
                 case (Powers.DoublePoints):
                     DoublePowerHitEffect.SetActive(true);
-                    if(gameManager.GetScoreModifier < 5)
+                    if(gameManager.GetScoreModifier < 8)
                     {
                         DoublePointsPower();
                     }
@@ -260,6 +230,12 @@ public class PowerUps : MonoBehaviour
                     SameColorHitEffect.SetActive(true);
                     break;
             }
+
+            circleCollider2D.enabled = false;
+            spriteRenderer.enabled = false;
+            audioSource.volume = PlayerPrefs.GetFloat("SoundEffectVolume");
+            audioSource.Play();
+            PowerParticle.SetActive(false);
         }
         powerUpManager.CreatePowerUpSymbol();
     }
@@ -312,11 +288,11 @@ public class PowerUps : MonoBehaviour
     {
         var gumDrop = FindObjectsOfType<Gumdrop>(true);
 
-        gameManager.GetScoreModifier++;
+        gameManager.GetScoreModifier *= 2;
 
         foreach (Gumdrop gd in gumDrop)
         {
-            gd.GetScoreValue *= gameManager.GetScoreModifier;
+            gd.GetScoreValue = gd.GetDefaultScore * gameManager.GetScoreModifier;
         }
         gameManager.GetScoreModifierAnimator.enabled = true;
         gameManager.GetScoreModifierAnimator.Play("ScoreModifier", -1, 0f);

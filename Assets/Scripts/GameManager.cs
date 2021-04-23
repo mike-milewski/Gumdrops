@@ -15,10 +15,13 @@ public class GameManager : MonoBehaviour
     private SoundManager soundManager;
 
     [SerializeField]
+    private AudioSource BGM;
+
+    [SerializeField]
     private TextMeshProUGUI TimerText, TargetScoreText, LevelText, ScoreModifierText, BestScoreNumberText, BestScoreText;
 
     [SerializeField]
-    private Animator ScoreModifierAnimator, IceFrameAnimator;
+    private Animator ScoreModifierAnimator, IceFrameAnimator, MinusTimerAnimator;
 
     [SerializeField]
     private GameObject GameOverMenu, FrozenOverlay;
@@ -38,11 +41,11 @@ public class GameManager : MonoBehaviour
     private int[] ScoreIncrement;
 
     [SerializeField]
-    private float StartTimer, MinimumTimer, CurrentTimer;
+    private float StartTimer, MinimumTimer;
 
     private int Level, LevelIndex, TargetScore, ScoreIncrementIndex;
 
-    private float Timer;
+    private float Timer, CurrentTimer;
 
     private bool StartTimerCount, TimeScaleIsZero;
 
@@ -218,7 +221,6 @@ public class GameManager : MonoBehaviour
                 {
                     ToggleMenuButton(menuButton);
                     GetComponent<AudioSource>().Play();
-                    CheckHighScore();
                     GameOverMenuOpened = true;
                 }
 
@@ -264,7 +266,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            int BonusLevel = Level * 50;
+            int BonusLevel = Level * 25;
 
             TargetScore = ScoreIncrement[ScoreIncrementIndex] + BonusLevel;
         }
@@ -274,6 +276,8 @@ public class GameManager : MonoBehaviour
     {
         if(CurrentTimer > MinimumTimer)
         {
+            MinusTimerAnimator.enabled = true;
+            MinusTimerAnimator.Play("MinusTimer", -1, 0f);
             CurrentTimer--;
         }
         Timer = CurrentTimer;
@@ -332,6 +336,12 @@ public class GameManager : MonoBehaviour
 
         GameOverMenuOpened = false;
         menuButton.interactable = true;
+    }
+
+    public void ResetMusic()
+    {
+        BGM.Stop();
+        BGM.Play();
     }
 
     public void ResetGumDrops()

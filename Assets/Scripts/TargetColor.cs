@@ -38,7 +38,7 @@ public class TargetColor : MonoBehaviour
     [SerializeField]
     private bool AboutToSwitchColor;
 
-    private bool ChangingToStartingColor;
+    private bool ChangingToStartingColor, TimeStarted;
 
     public Image GetTargetImage
     {
@@ -109,6 +109,18 @@ public class TargetColor : MonoBehaviour
         set
         {
             AboutToSwitchColor = value;
+        }
+    }
+
+    public bool GetTimeStarted
+    {
+        get
+        {
+            return TimeStarted;
+        }
+        set
+        {
+            TimeStarted = value;
         }
     }
 
@@ -246,6 +258,7 @@ public class TargetColor : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         TargetImage.GetComponent<Animator>().SetTrigger("SetFirstAnimation");
+        TimeStarted = true;
         StaticColor = false;
     }
 

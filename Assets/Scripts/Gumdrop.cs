@@ -262,9 +262,16 @@ public class Gumdrop : MonoBehaviour
 
         if (targetColor != null)
         {
-            if(targetColor.GetStaticColor)
+            if(targetColor.GetTimeStarted)
             {
-                spriteRenderer.sprite = targetColor.GetGumDropColors[targetColor.GetColorIndex];
+                if (targetColor.GetStaticColor)
+                {
+                    spriteRenderer.sprite = targetColor.GetGumDropColors[targetColor.GetColorIndex];
+                }
+                else
+                {
+                    ChooseColor();
+                }
             }
             else
             {
@@ -339,7 +346,10 @@ public class Gumdrop : MonoBehaviour
     {
         scoreManager.ScorePoints(-ScoreValue);
 
-        scoreManager.GetScoreText.color = scoreManager.GetSubtractScoreColor;
+        if(scoreManager.GetScore > 0)
+        {
+            scoreManager.GetScoreText.color = scoreManager.GetSubtractScoreColor;
+        }
     }
 
     public void PlayParticle()
