@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     private int[] ScoreIncrement;
 
     [SerializeField]
-    private float StartTimer;
+    private float StartTimer, MinimumTimer, CurrentTimer;
 
     private int Level, LevelIndex, TargetScore, ScoreIncrementIndex;
 
@@ -272,7 +272,11 @@ public class GameManager : MonoBehaviour
 
     private void NextLevel()
     {
-        Timer = StartTimer;
+        if(CurrentTimer > MinimumTimer)
+        {
+            CurrentTimer--;
+        }
+        Timer = CurrentTimer;
         CheckScoreIncrement();
 
         TargetScoreText.text = TargetScore.ToString();
@@ -308,6 +312,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         Timer = StartTimer;
+        CurrentTimer = StartTimer;
 
         TimerText.GetComponent<Animator>().SetBool("Timer", false);
         FrozenOverlay.GetComponent<Animator>().SetBool("SetAnimation", false);

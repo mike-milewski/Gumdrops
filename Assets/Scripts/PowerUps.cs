@@ -248,6 +248,10 @@ public class PowerUps : MonoBehaviour
             {
                 case (Powers.DoublePoints):
                     DoublePowerHitEffect.SetActive(true);
+                    if(gameManager.GetScoreModifier < 5)
+                    {
+                        DoublePointsPower();
+                    }
                     break;
                 case (Powers.Slow):
                     SlowPowerHitEffect.SetActive(true);
@@ -308,13 +312,14 @@ public class PowerUps : MonoBehaviour
     {
         var gumDrop = FindObjectsOfType<Gumdrop>(true);
 
-        foreach(Gumdrop gd in gumDrop)
+        gameManager.GetScoreModifier++;
+
+        foreach (Gumdrop gd in gumDrop)
         {
-            gd.GetScoreValue *= 2;
+            gd.GetScoreValue *= gameManager.GetScoreModifier;
         }
         gameManager.GetScoreModifierAnimator.enabled = true;
         gameManager.GetScoreModifierAnimator.Play("ScoreModifier", -1, 0f);
-        gameManager.GetScoreModifier++;
         gameManager.UpdateScoreModifier();
     }
 
@@ -357,7 +362,7 @@ public class PowerUps : MonoBehaviour
         {
             gd.GetScoreValue = gd.GetDefaultScore;
         }
-        gameManager.GetScoreModifier--;
+        gameManager.GetScoreModifier = 1;
         gameManager.UpdateScoreModifier();
     }
 
