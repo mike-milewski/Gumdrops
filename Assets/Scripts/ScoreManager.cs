@@ -20,7 +20,7 @@ public class ScoreManager : MonoBehaviour
     private Color AddScoreColor, SubtractScoreColor, BestScoreColor, DefaultBestScoreColor;
 
     [SerializeField]
-    private int Score, ScoreBonus, CorrectGumDropInputs, MaxGumDropInputs;
+    private int Score, ScoreBonus, IncorrectGumDropInputs, CorrectGumDropInputs, MaxGumDropInputs;
 
     private int NewHighScore;
 
@@ -74,6 +74,18 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
+    public int GetIncorrectGumDropInputs
+    {
+        get
+        {
+            return IncorrectGumDropInputs;
+        }
+        set
+        {
+            IncorrectGumDropInputs = value;
+        }
+    }
+
     public Color GetAddScoreColor
     {
         get
@@ -110,11 +122,9 @@ public class ScoreManager : MonoBehaviour
         {
             Score = 0;
         }
-        else
-        {
-            ScoreText.GetComponent<Animator>().enabled = true;
-            ScoreText.GetComponent<Animator>().Play("Score", -1, 0f);
-        }
+
+        ScoreText.GetComponent<Animator>().enabled = true;
+        ScoreText.GetComponent<Animator>().Play("Score", -1, 0f);
 
         ScoreText.text = Mathf.Max(0, Score).ToString();
 
@@ -192,6 +202,12 @@ public class ScoreManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
         BonusScoreFrameAnimator.SetBool("BonusScore", false);
+    }
+
+    public void ResetGumDropHits()
+    {
+        CorrectGumDropInputs = 0;
+        IncorrectGumDropInputs = 0;
     }
 
     public void ResetHighScoreFrameAnimation()

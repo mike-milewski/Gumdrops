@@ -229,7 +229,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void CheckHighScoreText()
+    public void CheckHighScoreText()
     {
         if(PlayerPrefs.HasKey("HighScore"))
         {
@@ -303,6 +303,8 @@ public class GameManager : MonoBehaviour
         }
 
         scoreManager.CheckTargetScore();
+
+        scoreManager.GetIncorrectGumDropInputs = 0;
 
         IncreaseGumDropAndPowerUpSpeed();
     }

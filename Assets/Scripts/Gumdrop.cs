@@ -296,9 +296,27 @@ public class Gumdrop : MonoBehaviour
 
     public void ChooseColor()
     {
-        ColorIndex = Random.Range(0, colors.Length);
+        if(targetColor != null)
+        {
+            if (Random.value * 100 <= 25)
+            {
+                ColorIndex = targetColor.GetColorIndex;
 
-        spriteRenderer.sprite = GumDropColors[ColorIndex];
+                spriteRenderer.sprite = GumDropColors[ColorIndex];
+            }
+            else
+            {
+                ColorIndex = Random.Range(0, colors.Length);
+
+                spriteRenderer.sprite = GumDropColors[ColorIndex];
+            }
+        }
+        else
+        {
+            ColorIndex = Random.Range(0, colors.Length);
+
+            spriteRenderer.sprite = GumDropColors[ColorIndex];
+        }
     }
 
     public void CheckColor()
@@ -319,6 +337,8 @@ public class Gumdrop : MonoBehaviour
         }
         else
         {
+            scoreManager.GetIncorrectGumDropInputs++;
+
             SubtractGumDropScore();
 
             scoreManager.GetCorrectGumDropInputs = 0;
@@ -344,7 +364,7 @@ public class Gumdrop : MonoBehaviour
 
     public void SubtractGumDropScore()
     {
-        scoreManager.ScorePoints(-ScoreValue);
+        scoreManager.ScorePoints(-ScoreValue * scoreManager.GetIncorrectGumDropInputs);
 
         if(scoreManager.GetScore > 0)
         {
