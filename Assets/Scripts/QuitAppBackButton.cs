@@ -5,10 +5,13 @@ using UnityEngine.SceneManagement;
 public class QuitAppBackButton : MonoBehaviour
 {
     [SerializeField]
+    private GameManager gameManager = null;
+
+    [SerializeField]
     private GameObject QuitMenu;
 
     [SerializeField]
-    private Button YesBtn, NoBtn;
+    private Button YesBtn, NoBtn, MenuBtn = null;
 
     [SerializeField]
     private Button[] buttons;
@@ -41,6 +44,10 @@ public class QuitAppBackButton : MonoBehaviour
                         QuitMenu.GetComponent<Animator>().SetBool("OpenMenu", true);
                         DisableButtons();
                         EnableYesAndNoButtons();
+                        if(MenuBtn != null)
+                        {
+                            MenuBtn.interactable = false;
+                        }
                         audioSource.Play();
                         IsMenuOpened = true;
 
@@ -109,6 +116,14 @@ public class QuitAppBackButton : MonoBehaviour
             Time.timeScale = 1;
         }
         else return;
+    }
+
+    public void CheckIfMenuIsOpened()
+    {
+        if (!gameManager.GetMenuOpened)
+        {
+            MenuBtn.interactable = true;
+        }
     }
 
     public void ResetIsMenuOpened()

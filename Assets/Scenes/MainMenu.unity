@@ -3902,6 +3902,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ObjectPooler
       objectReference: {fileID: 0}
+    - target: {fileID: 3386047993023684155, guid: a3358cad50350b347a320e0044cb6c4a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3358cad50350b347a320e0044cb6c4a, type: 3}
 --- !u!1 &1040940021
@@ -5265,7 +5270,7 @@ Camera:
   m_GameObject: {fileID: 1780658284}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -6373,6 +6378,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1087520055470517211, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087520055470517211, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
+        type: 3}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087520055470517211, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
+        type: 3}
+      propertyPath: m_Colors.m_DisabledColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087520055470517211, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 944107075}
@@ -6489,6 +6509,21 @@ PrefabInstance:
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
       propertyPath: m_Colors.m_DisabledColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
+        type: 3}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
+        type: 3}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
+        type: 3}
+      propertyPath: m_Colors.m_DisabledColor.r
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,

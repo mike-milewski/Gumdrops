@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
 
     private float Timer, CurrentTimer;
 
-    private bool StartTimerCount, TimeScaleIsZero;
+    private bool StartTimerCount, TimeScaleIsZero, MenuOpened;
 
     [SerializeField]
     private bool GameOverMenuOpened;
@@ -109,6 +109,18 @@ public class GameManager : MonoBehaviour
         set
         {
             StartTimerCount = value;
+        }
+    }
+
+    public bool GetMenuOpened
+    {
+        get
+        {
+            return MenuOpened;
+        }
+        set
+        {
+            MenuOpened = value;
         }
     }
 
@@ -438,6 +450,16 @@ public class GameManager : MonoBehaviour
     public void ToggleMenuButton(Button MenuButton)
     {
         MenuButton.interactable = false;
+    }
+
+    public void SetMenuOpenedToTrue()
+    {
+        MenuOpened = true;
+    }
+    
+    public void SetMenuOpenedToFalse()
+    {
+        MenuOpened = false;
     }
 
     public void OpenMenu(Animator animator)

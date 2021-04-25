@@ -1048,6 +1048,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2080096475}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: SetMenuOpenedToTrue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &461038478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2360,6 +2372,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[5].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.UI.Slider, UnityEngine.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5361428294890012228, guid: 91aac4e6d09a9f4479ccb6e6c9c0ba40,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5361428294890012228, guid: 91aac4e6d09a9f4479ccb6e6c9c0ba40,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5361428294890012229, guid: 91aac4e6d09a9f4479ccb6e6c9c0ba40,
         type: 3}
@@ -4072,7 +4094,7 @@ PrefabInstance:
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
@@ -4096,6 +4118,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1163552898}
@@ -4103,7 +4130,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 461038477}
+      objectReference: {fileID: 1532201928}
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
@@ -4126,33 +4153,43 @@ PrefabInstance:
       objectReference: {fileID: 1532201928}
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_Target
+      value: 
+      objectReference: {fileID: 1532201928}
+    - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: PlayCloseMenuAnimator
       objectReference: {fileID: 0}
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: set_interactable
-      objectReference: {fileID: 0}
-    - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
       value: ResetIsMenuOpened
       objectReference: {fileID: 0}
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
       value: EnableButtons
       objectReference: {fileID: 0}
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[5].m_MethodName
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
       value: DisableYesAndNoButtons
       objectReference: {fileID: 0}
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[6].m_MethodName
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[5].m_MethodName
       value: CheckTimeScale
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[6].m_MethodName
+      value: CheckIfMenuIsOpened
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_MethodName
+      value: CheckIfMenuIsOpened
       objectReference: {fileID: 0}
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
@@ -4162,7 +4199,7 @@ PrefabInstance:
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: UnityEngine.UI.Selectable, UnityEngine.UI
+      value: QuitAppBackButton, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
@@ -4182,6 +4219,11 @@ PrefabInstance:
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[6].m_TargetAssemblyTypeName
+      value: QuitAppBackButton, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_TargetAssemblyTypeName
       value: QuitAppBackButton, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
@@ -4227,6 +4269,11 @@ PrefabInstance:
     - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[6].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087520056839558055, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1087520057302783906, guid: 5c3f7191095a44b4cbb0c25afa7653a0,
@@ -5187,6 +5234,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 1088748822}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2080096475}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: SetMenuOpenedToFalse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6172,6 +6231,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8421078903556706476, guid: c4e16cd8e98b86045807c0fa71dc0935,
         type: 3}
+      propertyPath: MenuBtn
+      value: 
+      objectReference: {fileID: 461038477}
+    - target: {fileID: 8421078903556706476, guid: c4e16cd8e98b86045807c0fa71dc0935,
+        type: 3}
       propertyPath: QuitMenu
       value: 
       objectReference: {fileID: 1163552895}
@@ -6192,13 +6256,18 @@ PrefabInstance:
       objectReference: {fileID: 1532201930}
     - target: {fileID: 8421078903556706476, guid: c4e16cd8e98b86045807c0fa71dc0935,
         type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 2080096475}
+    - target: {fileID: 8421078903556706476, guid: c4e16cd8e98b86045807c0fa71dc0935,
+        type: 3}
       propertyPath: StartGameBtn
       value: 
       objectReference: {fileID: 1341139000}
     - target: {fileID: 8421078903556706476, guid: c4e16cd8e98b86045807c0fa71dc0935,
         type: 3}
       propertyPath: buttons.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8421078903556706476, guid: c4e16cd8e98b86045807c0fa71dc0935,
         type: 3}
