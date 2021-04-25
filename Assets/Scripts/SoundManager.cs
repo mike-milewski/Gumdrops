@@ -22,9 +22,6 @@ public class SoundManager : MonoBehaviour
 
     private void OnEnable()
     {
-        //PlayerPrefs.DeleteKey("BackgroundVolume");
-        //PlayerPrefs.DeleteKey("SoundEffectVolume");
-
         if(!PlayerPrefs.HasKey("BackgroundVolume"))
         {
             PlayerPrefs.SetFloat("BackgroundVolume", 1);

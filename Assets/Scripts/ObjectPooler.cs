@@ -250,8 +250,8 @@ public class ObjectPooler : MonoBehaviour
         {
             DefaultSpawnTimer = MainGameSpawnTimer;
         }
-        SpawnTimer = DefaultSpawnTimer;
-        CurrentSpawnTimer = DefaultSpawnTimer;
+        SpawnTimer = SpawnTimerPerLevel[0];
+        CurrentSpawnTimer = SpawnTimerPerLevel[0];
     }
 
     private void Update()

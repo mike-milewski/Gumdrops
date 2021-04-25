@@ -182,6 +182,9 @@ public class ScoreManager : MonoBehaviour
         {
             int BonusScore = ScoreBonus * gameManager.GetScoreModifier;
 
+            ScoreText.GetComponent<Animator>().enabled = true;
+            ScoreText.GetComponent<Animator>().Play("Score", -1, 0f);
+
             Score += BonusScore;
 
             BonusScoreFrameAnimator.SetBool("BonusScore", true);

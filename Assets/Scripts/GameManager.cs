@@ -186,8 +186,6 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        //PlayerPrefs.DeleteKey("HighScore");
-
         TimerTextColor = TimerText.color;
 
         StartGame();
@@ -259,16 +257,14 @@ public class GameManager : MonoBehaviour
 
     private void CheckScoreIncrement()
     {
+        ScoreIncrementIndex++;
         if(ScoreIncrementIndex < ScoreIncrement.Length)
         {
-            ScoreIncrementIndex++;
             TargetScore = ScoreIncrement[ScoreIncrementIndex];
         }
         else
         {
-            int BonusLevel = Level * 25;
-
-            TargetScore = ScoreIncrement[ScoreIncrementIndex] + BonusLevel;
+            TargetScore += 1000;
         }
     }
 
@@ -281,6 +277,7 @@ public class GameManager : MonoBehaviour
             CurrentTimer--;
         }
         Timer = CurrentTimer;
+
         CheckScoreIncrement();
 
         TargetScoreText.text = TargetScore.ToString();

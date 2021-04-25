@@ -5005,7 +5005,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 11.9, y: 14.09}
+  m_Size: {x: 12.69, y: 14.09}
   m_EdgeRadius: 0
 --- !u!95 &980605412
 Animator:
@@ -5065,6 +5065,8 @@ MonoBehaviour:
   - {r: 0, g: 0.69761467, b: 1, a: 1}
   - {r: 0, g: 1, b: 0.007976532, a: 1}
   - {r: 0.96420634, g: 1, b: 0, a: 1}
+  DefaultScore: 0
+  ColorIndex: 0
 --- !u!82 &2745680803793963211
 AudioSource:
   m_ObjectHideFlags: 0
